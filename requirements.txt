@@ -1,0 +1,9 @@
+groq
+gTTS
+gradio
+mysql-connector-python
+python-dotenv
+Pillow
+opencv-python
+bcrypt
+geocoder
