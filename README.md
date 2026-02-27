@@ -1,19 +1,33 @@
 # AI Civic Issue Reporter
 
-run these in order
+## Setup Instructions
 
+Run the following commands **in order**:
+
+```bash
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 python app\init_db.py
 python set_admin_password.py
-python -m app.gradio_app  
-
-
-run using-
 python -m app.gradio_app
+```
 
-directory
+---
+
+## Run Application
+
+To start the application after setup:
+
+```bash
+python -m app.gradio_app
+```
+
+---
+
+## Project Directory Structure
+
+```
 AI_CIVIC_ISSUE_REPORTER/
 │
 ├── app/
@@ -34,3 +48,4 @@ AI_CIVIC_ISSUE_REPORTER/
 ├── requirements.txt
 ├── README.md
 └── set_admin_password.py
+```
