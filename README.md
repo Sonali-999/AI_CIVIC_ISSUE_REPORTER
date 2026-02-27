@@ -2,9 +2,12 @@
 
 run these in order
 
+python -m venv venv
 venv\Scripts\activate
-python app/init_db.py
 pip install -r requirements.txt
+python app\init_db.py
+python set_admin_password.py
+python -m app.gradio_app  
 
 
 run using-
