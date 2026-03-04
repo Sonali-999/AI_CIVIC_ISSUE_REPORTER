@@ -11,11 +11,10 @@ def init_db():
     client = MongoClient(MONGO_URI)
     db = client[DB_NAME]
 
-    # Create collections if not exist
-    db.create_collection("users")
-    db.create_collection("complaints")
+    # Just test connection instead of creating collections
+    client.admin.command("ping")
 
-    print("✅ MongoDB initialized successfully!")
+    print("✅ MongoDB connected successfully!")
 
 if __name__ == "__main__":
     init_db()
