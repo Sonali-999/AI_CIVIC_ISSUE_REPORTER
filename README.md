@@ -64,7 +64,7 @@ python -c "f=open('keys/aes_image_key.bin','rb'); print(f.read().hex())"
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
 
 A[User uploads image] --> B[Gradio saves file to temp directory]
 B --> C[Copy file to uploads/photo.jpg - temporary plaintext]
