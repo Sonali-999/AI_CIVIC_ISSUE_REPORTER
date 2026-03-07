@@ -66,22 +66,17 @@ python -c "f=open('keys/aes_image_key.bin','rb'); print(f.read().hex())"
 ```mermaid
 flowchart TD
 
-A[User uploads image] --> B[Gradio saves file<br>Temp Directory<br>C:/Users/.../Temp/gradio]
+A[User uploads image] --> B[Gradio saves file to temp directory]
+B --> C[Copy file to uploads/photo.jpg - temporary plaintext]
+C --> D[Run encrypt_image]
+D --> E[Create encrypted file uploads/photo.jpg.enc]
+E --> F[Delete plaintext file uploads/photo.jpg]
+F --> G[Only encrypted file remains uploads/photo.jpg.enc]
 
-B --> C[Copy file to uploads/photo.jpg<br>⚠ Temporary plaintext]
-
-C --> D[Run encrypt_image()]
-
-D --> E[Create encrypted file<br>uploads/photo.jpg.enc]
-
-E --> F[Delete plaintext file<br>os.remove uploads/photo.jpg]
-
-F --> G[Only encrypted file remains<br>uploads/photo.jpg.enc 🔒]
-
-classDef user fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px,color:#000
-classDef process fill:#e8f5e9,stroke:#43a047,stroke-width:2px,color:#000
-classDef warning fill:#fff3e0,stroke:#fb8c00,stroke-width:2px,color:#000
-classDef secure fill:#e8eaf6,stroke:#5e35b1,stroke-width:2px,color:#000
+classDef user fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
+classDef process fill:#e8f5e9,stroke:#43a047,stroke-width:2px
+classDef warning fill:#fff3e0,stroke:#fb8c00,stroke-width:2px
+classDef secure fill:#e8eaf6,stroke:#5e35b1,stroke-width:2px
 
 class A user
 class B,D,E,F process
