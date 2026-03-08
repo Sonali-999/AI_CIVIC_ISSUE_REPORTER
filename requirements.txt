@@ -8,3 +8,5 @@ opencv-python
 bcrypt
 geocoder
 pymongo
+cryptography
+PyJWT

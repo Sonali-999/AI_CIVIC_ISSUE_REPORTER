@@ -1,0 +1,52 @@
+2026-03-08T18:14:01.364265 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T18:14:37.648223 | IMAGE_ENCRYPTED | original=uploads\broken-urban-street-lamp-photo.jpg, encrypted=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:13.594548 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T18:15:13.604747 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T18:15:13.627071 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:13.667651 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T18:15:13.696896 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T18:15:53.649184 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T18:15:53.666638 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T18:15:53.694308 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:53.719547 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T18:15:53.753999 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T18:16:10.443099 | STATUS_UPDATED | complaint_id=69adada857418c7418c6c0ae, old=pending, new=resolved
+2026-03-08T19:12:02.650782 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T19:12:12.165373 | IMAGE_ENCRYPTED | original=uploads\potholes.jpg, encrypted=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.478500 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:12:43.486706 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:12:43.496953 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:12:43.549346 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.559952 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.577515 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:13:22.060594 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:13:22.073004 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:13:22.086999 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:13:22.105633 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:13:22.117012 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:13:22.132994 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:18:53.330368 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:18:53.339428 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:18:53.351264 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:18:53.363008 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:18:53.375191 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:18:53.392460 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:22:24.320764 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T19:22:49.921735 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:22:49.934632 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:22:49.949864 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:22:49.963269 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:22:49.974598 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:22:49.991602 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:25:22.838883 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:25:22.853020 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:25:22.865589 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:25:22.881232 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:25:22.892752 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:25:22.907438 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:32:22.230389 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:32:22.289687 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:32:22.308739 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:32:22.324555 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:32:22.334623 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:32:22.349336 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc

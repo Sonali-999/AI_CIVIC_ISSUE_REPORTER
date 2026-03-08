@@ -1,18 +1,40 @@
 import os
 import gradio as gr
 from dotenv import load_dotenv
+import shutil
+import tempfile
 
 from .auth import register_user_wrapper, login_user_wrapper
 from .db_utils import (
     save_complaint, get_complaints_by_department, get_all_complaints,
     update_complaint_status, get_notifications, get_unread_count,
-    mark_all_notifications_read, STATUS_LABELS,get_user_complaint_stats,get_complaints_by_user
+    mark_all_notifications_read, STATUS_LABELS,get_user_complaint_stats,get_complaints_by_user, get_all_departments
+)
+from .admin_signature import (
+    generate_admin_keypair,
+    create_login_challenge,
+    sign_challenge,
+    verify_admin_signature,
 )
 from .image_processor import encode_image
 from .ai_service import analyze_image_with_query
-
+from .image_encryption import encrypt_image, decrypt_image
+from .security_audit import log_security_event
+from .jwt_tokens import create_token, verify_token, token_required
 # ---------------- Load environment ----------------
 load_dotenv()
+
+import hashlib
+
+# Whitelist of emails allowed to register as admin
+ALLOWED_ADMIN_EMAILS = {
+    "admin@gmail.com",
+    "munic@gov.in",
+    
+}
+
+# In-memory OTP store: {email: otp_string}  — cleared after each use
+admin_otp_store = {}
 
 # ---------------- System Prompt ----------------
 system_prompt = (
@@ -406,114 +428,95 @@ button { font-family: 'Sora', sans-serif !important; }
 .forgot-link a:hover { text-decoration: underline; }
 /* ===== Admin Gallery ===== */
 
-/* Kill split-panel layout */
-#admin-gallery,
-#admin-gallery > .wrap,
-#admin-gallery > div {
-    display: block !important;
-    overflow: visible !important;
+/* ── Admin Gallery ── */
+
+/* Let the outer wrapper breathe */
+#admin-gallery {
     height: auto !important;
-    min-height: unset !important;
-    max-height: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
 }
 
-/* Hide scroll arrows */
+/* Hide Gradio's scroll arrows */
 #admin-gallery svg[data-testid="chevron-up"],
-#admin-gallery svg[data-testid="chevron-down"],
-#admin-gallery .scroll-arrow,
-#admin-gallery button.scroll-btn {
+#admin-gallery svg[data-testid="chevron-down"] {
     display: none !important;
 }
 
-/* 3-column grid */
-#admin-gallery .grid-wrap,
-#admin-gallery [data-testid="gallery"],
-#admin-gallery .gallery,
-#admin-gallery > div > div {
+/* The gallery grid container — target Gradio's actual wrapper class */
+#admin-gallery .grid-wrap {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    grid-auto-rows: 340px !important;
-    gap: 14px !important;
+    grid-auto-rows: 200px !important;
+    gap: 12px !important;
     padding: 16px !important;
-    width: 100% !important;
     height: auto !important;
-    max-height: unset !important;
+    max-height: none !important;
     overflow: visible !important;
+    background: transparent !important;
 }
 
-/* Thumbnail cards — fixed equal size */
-#admin-gallery button.thumbnail-item,
-#admin-gallery .thumbnail-item,
-#admin-gallery [data-testid="gallery"] button,
-#admin-gallery .gallery button {
+/* Each thumbnail button = one card */
+#admin-gallery .grid-wrap > button {
     width: 100% !important;
-    height: 340px !important;
+    height: 200px !important;
     padding: 0 !important;
     margin: 0 !important;
-    border: none !important;
-    border-radius: 14px !important;
+    border-radius: 10px !important;
     overflow: hidden !important;
-    background: #dde1e7 !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09) !important;
-    position: relative !important;
+    background: #e2e8f0 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10) !important;
     cursor: pointer !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
     opacity: 0;
-    animation: fadeInCard 0.5s ease forwards;
+    animation: fadeInCard 0.4s ease forwards;
 }
 
-/* Image fills card perfectly */
-#admin-gallery button.thumbnail-item img,
-#admin-gallery .thumbnail-item img,
-#admin-gallery .gallery button img {
-    position: absolute !important;
-    inset: 0 !important;
+/* Image inside each card */
+#admin-gallery .grid-wrap > button img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     object-position: center !important;
-    transition: transform 0.4s ease, filter 0.35s ease !important;
+    display: block !important;
+    transition: transform 0.3s ease !important;
 }
 
 /* Hover */
-#admin-gallery button.thumbnail-item:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.14) !important;
+#admin-gallery .grid-wrap > button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.15) !important;
 }
-#admin-gallery button.thumbnail-item:hover img {
-    transform: scale(1.07) !important;
-    filter: brightness(1.06) !important;
-}
-
-/* Press */
-#admin-gallery button.thumbnail-item:active {
-    transform: scale(0.97) !important;
+#admin-gallery .grid-wrap > button:hover img {
+    transform: scale(1.05) !important;
 }
 
-/* Fade-in */
+/* Fade-in animation */
 @keyframes fadeInCard {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+#admin-gallery .grid-wrap > button:nth-child(1)  { animation-delay: 0.04s; }
+#admin-gallery .grid-wrap > button:nth-child(2)  { animation-delay: 0.08s; }
+#admin-gallery .grid-wrap > button:nth-child(3)  { animation-delay: 0.12s; }
+#admin-gallery .grid-wrap > button:nth-child(4)  { animation-delay: 0.16s; }
+#admin-gallery .grid-wrap > button:nth-child(5)  { animation-delay: 0.20s; }
+#admin-gallery .grid-wrap > button:nth-child(6)  { animation-delay: 0.24s; }
+#admin-gallery .grid-wrap > button:nth-child(7)  { animation-delay: 0.28s; }
+#admin-gallery .grid-wrap > button:nth-child(8)  { animation-delay: 0.32s; }
+#admin-gallery .grid-wrap > button:nth-child(9)  { animation-delay: 0.36s; }
+#admin-gallery .grid-wrap > button:nth-child(10) { animation-delay: 0.40s; }
+#admin-gallery .grid-wrap > button:nth-child(11) { animation-delay: 0.44s; }
+#admin-gallery .grid-wrap > button:nth-child(12) { animation-delay: 0.48s; }
 
-#admin-gallery button:nth-child(1) { animation-delay: 0.05s; }
-#admin-gallery button:nth-child(2) { animation-delay: 0.10s; }
-#admin-gallery button:nth-child(3) { animation-delay: 0.15s; }
-#admin-gallery button:nth-child(4) { animation-delay: 0.20s; }
-#admin-gallery button:nth-child(5) { animation-delay: 0.25s; }
-#admin-gallery button:nth-child(6) { animation-delay: 0.30s; }
-#admin-gallery button:nth-child(7) { animation-delay: 0.35s; }
-#admin-gallery button:nth-child(8) { animation-delay: 0.40s; }
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-    .fixed-gallery .grid {
+/* Responsive */
+@media (max-width: 900px) {
+    #admin-gallery .grid-wrap {
         grid-template-columns: repeat(2, 1fr) !important;
     }
 }
-
-@media (max-width: 600px) {
-    .fixed-gallery .grid {
+@media (max-width: 560px) {
+    #admin-gallery .grid-wrap {
         grid-template-columns: 1fr !important;
     }
 }
@@ -671,12 +674,34 @@ def _role_selector_html(selected: str = "citizen") -> str:
 # ════════════════════════════════════════════════════════════════════════════
 
 def select_citizen_role():
-    """Called when Citizen role button is clicked."""
-    return "citizen", _role_selector_html("citizen")
+    """Show citizen sub-form, hide admin sub-form."""
+    return (
+        "citizen",
+        _role_selector_html("citizen"),
+        gr.update(visible=True),   # citizen_login_panel
+        gr.update(visible=False),  # admin_login_panel
+    )
 
 def select_admin_role():
-    """Called when Admin role button is clicked."""
-    return "admin", _role_selector_html("admin")
+    """Show admin sub-form, hide citizen sub-form."""
+    return (
+        "admin",
+        _role_selector_html("admin"),
+        gr.update(visible=False),  # citizen_login_panel
+        gr.update(visible=True),   # admin_login_panel
+    )
+
+def request_admin_otp(email, password):
+    """Validate admin credentials then print OTP to terminal."""
+    if not email or not password:
+        return '<div class="status-error">❌ Please enter your email and password first.</div>'
+    result = login_user_wrapper(email, password)
+    if result.get("status") != "success":
+        return '<div class="status-error">❌ Invalid credentials.</div>'
+    if result.get("role") != "admin":
+        return '<div class="status-error">❌ This account is not an admin account.</div>'
+    generate_admin_otp(email)
+    return '<div class="status-error">🔐 OTP sent to terminal. Enter it above and click Sign In.</div>'
 
 
 def signup(email, password, role, state):
@@ -688,6 +713,16 @@ def signup(email, password, role, state):
             gr.update(visible=True),   # signup form stays visible
             gr.update(visible=False),
         )
+
+    # ── Block unauthorized admin registration ──
+    if role == "admin" and email.strip().lower() not in ALLOWED_ADMIN_EMAILS:
+        return (
+            '<div class="status-error">❌ This email is not authorized for admin registration.</div>',
+            state,
+            gr.update(visible=True),
+            gr.update(visible=False),
+        )
+    # ───────────────────────────────────────────
     result = register_user_wrapper(email, password, role)
     if "success" in result.get("status", "").lower():
         return (
@@ -705,14 +740,44 @@ def signup(email, password, role, state):
         )
 
 
-def login(email, password, role, state):
+def login(email, password, role, state, admin_otp=""):
     """Login and route to the correct dashboard."""
     result = login_user_wrapper(email, password)
+
+    # ── Admin OTP verification ──────────────────
+    if result.get("status") == "success" and result.get("role") == "admin":
+        expected_otp = admin_otp_store.get(email)
+        if not expected_otp:
+            return (
+                '<div class="status-error">❌ Please click <b>Get OTP</b> first, then enter the code.</div>',
+                state, _make_header(), gr.update(visible=True),
+                gr.update(visible=False), gr.update(visible=False),
+                gr.update(), [], "", "", "",
+            )
+        if admin_otp.strip() != expected_otp:
+            del admin_otp_store[email]
+            return (
+                '<div class="status-error">❌ Invalid OTP. Click <b>Get OTP</b> again to request a new one.</div>',
+                state, _make_header(), gr.update(visible=True),
+                gr.update(visible=False), gr.update(visible=False),
+                gr.update(), [], "", "", "",
+            )
+        del admin_otp_store[email]   # one-time use
+        print(f"[✅] Admin {email} passed OTP verification.")
+    # ────────────────────────────────────────────
+
     if result.get("status") == "success":
         actual_role = result.get("role", role)  # trust DB role
+        log_security_event(
+            "LOGIN_SUCCESS",
+            f"user={email}, role={actual_role}"
+        )
         state["uid"]   = result["user_id"]
         state["email"] = email
         state["role"]  = actual_role
+
+        token = create_token(result['user_id'], email, actual_role)
+        state['token'] = token     # store signed JWT in session state
 
         is_citizen = (actual_role == "citizen")
         is_admin   = (actual_role == "admin")
@@ -744,6 +809,10 @@ def login(email, password, role, state):
             bell_html,
         )
     else:
+        log_security_event(
+            "LOGIN_FAILED",
+            f"user={email}"
+        )
         state["uid"] = state["email"] = state["role"] = None
         return (
             '<div class="status-error">❌ Invalid credentials. Please try again.</div>',
@@ -755,12 +824,13 @@ def login(email, password, role, state):
             gr.update(),  # no change to admin_container
             [],           # empty gallery
             "",           # no stats
+            "",           # no history
             "",           # empty bell
         )
 
 
 def signout(state):
-    state["uid"] = state["email"] = state["role"] = None
+    state["uid"] = state["email"] = state["role"] = state['token'] = None
     return (
         '<div class="status-success">✅ Successfully signed out!</div>',
         state,
@@ -777,6 +847,23 @@ def show_signup():
 def show_login():
     return gr.update(visible=True), gr.update(visible=False)
 
+def generate_admin_otp(email: str) -> str:
+    """Sign a challenge with the admin's private key, derive a 6-digit OTP from it."""
+    challenge = create_login_challenge(email)
+    safe      = email.replace("@", "_at_").replace(".", "_")
+    priv_path = f"keys/admin_{safe}_private.pem"
+    try:
+        signature = sign_challenge(challenge, priv_path)
+        otp = str(int(hashlib.sha256(signature.encode()).hexdigest(), 16))[-6:]
+        admin_otp_store[email] = otp
+        print(f"\n{'='*40}")
+        print(f"  🔐 ADMIN OTP FOR {email}")
+        print(f"  Code: {otp}")
+        print(f"{'='*40}\n")
+        return otp
+    except FileNotFoundError:
+        print(f"[WARN] No private key found for {email}")
+        return None
 
 # ════════════════════════════════════════════════════════════════════════════
 # AI COMPLAINT PROCESSING
@@ -835,10 +922,16 @@ def format_citizen_ai_output(title, category, department, description):
 
 
 def process_complaint(image_path, user_msg, state):
-    if not state.get("uid"):
-        return '<div class="status-error">❌ Please log in first to submit a complaint.</div>', None
+    try:
+        payload = token_required(state.get('token'), required_role='citizen')
+    except ValueError as e:
+        return f'<div class="status-error">❌ {e}</div>', None, ''
+
+    uid = payload['sub']   # use payload['sub'] instead of state['uid']
+
+
     if not image_path:
-        return '<div class="status-error">❌ Please upload an image of the issue.</div>', None
+        return '<div class="status-error">❌ Please upload an image of the issue.</div>', None, ""        
     try:
         ai_output = analyze_image_with_query(
             query_text=f"{system_prompt} {user_msg}",
@@ -846,12 +939,22 @@ def process_complaint(image_path, user_msg, state):
             model="meta-llama/llama-4-scout-17b-16e-instruct"
         )
         title, category, department, description = parse_ai_output(ai_output)
-        save_complaint(state["uid"], title, category, department, description, image_path)
+
+        os.makedirs("uploads", exist_ok=True)
+        filename   = os.path.basename(image_path)
+        saved_path = os.path.join("uploads", filename)
+        shutil.copy2(image_path, saved_path)
+
+        enc_path = encrypt_image(saved_path)
+        os.remove(saved_path)
+
+        save_complaint(state["uid"], title, category, department, description, enc_path)
         html_content = format_citizen_ai_output(title, category, department, description)
         stats_html = generate_user_stats(state)
         return html_content, image_path, stats_html
+
     except Exception as e:
-        return f'<div class="status-error">❌ Error processing complaint: {str(e)}</div>', None
+        return f'<div class="status-error">❌ Error processing complaint: {str(e)}</div>', None, ""  
 
 def generate_user_stats(state):
 
@@ -1050,6 +1153,11 @@ def refresh_bell(state):
 
 def handle_status_update(complaint_id: str, new_status: str, state: dict):
     """Admin handler: update a complaint's status and return feedback HTML."""
+    try:
+        token_required(state.get('token'), required_role='admin')
+    except ValueError as e:
+        return f'<div class="status-error">❌ Access denied: {e}</div>'
+
     if state.get("role") != "admin":
         return '<div class="status-error">🚫 Admin access required.</div>'
     if not complaint_id or not new_status:
@@ -1068,11 +1176,24 @@ def handle_status_update(complaint_id: str, new_status: str, state: dict):
 # ════════════════════════════════════════════════════════════════════════════
 
 def get_admin_complaints_html(state):
+    try:
+        token_required(state.get('token'), required_role='admin')
+    except ValueError as e:
+        return f'<div class="status-error">❌ {e}</div>', []
+
     if state.get("role") != "admin":
         return '<div class="status-error">🚫 Admin access required.</div>', []
 
-    departments   = ["Sanitation", "Roads", "Electricity", "Water"]
-    dept_icons    = {"Sanitation": "🗑️", "Roads": "🛣️", "Electricity": "⚡", "Water": "💧"}
+    # ── REPLACE hardcoded list with dynamic fetch from MongoDB ──────────
+    departments = get_all_departments()
+    
+    # ────────────────────────────────────────────────────────────────────
+
+    dept_icons = {
+        "Sanitation": "🗑️", "Roads": "🛣️",
+        "Electricity": "⚡", "Water": "💧"
+    }
+    # rest of your code unchanged...
     status_colors = {
         "resolved":    "#10B981",
         "in_progress": "#F59E0B",
@@ -1103,19 +1224,36 @@ def get_admin_complaints_html(state):
             image_path  = row.get("image_path")
             timestamp   = row.get("created_at")
             status      = row.get("status", "pending")
+            tampered    = row.get("tampered", False)
 
             all_complaint_ids.append(row_id)
             status_color = status_colors.get(status.lower(), "#6B7E96")
 
+            #gallery only supports actual image files, so if it's encrypted we need to decrypt to a temp file first
+            img_idx = 0   # default = no image, so the HTML tag won't show
             if image_path and os.path.exists(image_path):
-                image_paths.append(image_path)
-            img_idx = len(image_paths)
+                if image_path.endswith(".enc"):
+                    try:
+                        raw_bytes = decrypt_image(image_path)          # returns bytes
+                        base      = image_path.replace(".enc", "")
+                        suffix    = os.path.splitext(base)[1] or ".jpg"
+                        tmp       = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+                        tmp.write(raw_bytes)
+                        tmp.close()
+                        image_paths.append(tmp.name)                   # temp file path
+                        img_idx = len(image_paths)                     # set AFTER appending
+                    except Exception as e:
+                        print(f"[gallery] Could not decrypt {image_path}: {e}")
+                else:
+                    image_paths.append(image_path)
+                    img_idx = len(image_paths)
 
             # Status badge + inline update hint
             html_content += f"""
             <div class="admin-card" id="card-{row_id}">
                 <div style="display:flex;justify-content:space-between;
                      align-items:flex-start;margin-bottom:10px;">
+
                     <div>
                         <div style="font-size:11px;color:#6B7E96;font-weight:600;
                              font-family:monospace;margin-bottom:4px;">ID: {row_id}</div>
@@ -1168,6 +1306,7 @@ def get_admin_complaints_html(state):
                     <span style="font-size:11px;color:#6B7E96;">← paste this ID below to update</span>
                 </div>
                 {f'<div style="font-size:11px;color:#6B7E96;margin-top:8px;font-style:italic;">📷 Image #{img_idx} in gallery below</div>' if img_idx else ''}
+                {f'<div style="background:#EF444420;border:2px solid #EF4444;border-radius:8px;padding:8px 14px;margin-top:8px;color:#EF4444;font-weight:700;font-size:13px;">⚠️ TAMPERED — This complaint was modified directly in the database!</div>' if tampered else ''}
             </div>"""
 
     if html_content == '<div style="animation:fadeUp 0.4s ease;">':
@@ -1184,8 +1323,7 @@ def get_admin_complaints_html(state):
 # BUILD GRADIO APP
 # ════════════════════════════════════════════════════════════════════════════
 
-with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
-               title="🏛️ CivicAI — Smart Civic Issue Detection") as demo:
+with gr.Blocks(title="🏛️ CivicAI — Smart Civic Issue Detection") as demo:
 
     # ── shared state ──
     header_display     = gr.HTML(_make_header())
@@ -1221,25 +1359,14 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
             # ── LOGIN FORM ──
             with gr.Column(visible=True) as login_form:
 
-                # Role selector — two Gradio buttons that look like cards
-                role_display = gr.HTML(_role_selector_html("citizen"))
-                citizen_role_btn = gr.Button("👤  Citizen",
-                                                elem_classes=["role-btn"],
-                                                visible=False)
-                admin_role_btn   = gr.Button("🛡️  Admin",
-                                                elem_classes=["role-btn"],
-                                                visible=False)
-
-                # Visible role-selector UI (HTML) + two hidden Gradio buttons for click routing
-                gr.HTML("""
-                <div class="role-selector" style="margin-bottom:20px;">
-                </div>""")
-
-                # Actual clickable role buttons rendered inside HTML via gr.Row
+                # Role selector buttons
                 with gr.Row(equal_height=True):
                     citizen_btn = gr.Button("👤  Citizen", elem_classes=["role-btn"])
                     admin_btn   = gr.Button("🛡️  Admin",   elem_classes=["role-btn"])
 
+                role_display = gr.HTML(_role_selector_html("citizen"))
+
+                # Shared email + password fields
                 login_email    = gr.Textbox(label="Email Address",
                                             placeholder="your.email@example.com",
                                             elem_id="login-email")
@@ -1249,7 +1376,20 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
 
                 gr.HTML('<div class="forgot-link"><a href="#">Forgot password?</a></div>')
 
-                login_btn = gr.Button("Sign In", elem_classes=["primary-btn"])
+                # ── CITIZEN sub-form (visible by default) ──
+                with gr.Column(visible=True) as citizen_login_panel:
+                    citizen_signin_btn = gr.Button("Sign In", elem_classes=["primary-btn"])
+
+                # ── ADMIN sub-form (hidden until Admin role is selected) ──
+                with gr.Column(visible=False) as admin_login_panel:
+                    admin_otp_input = gr.Textbox(
+                        label="Admin OTP",
+                        placeholder="Enter 6-digit code from terminal...",
+                        max_lines=1,
+                    )
+                    with gr.Row(equal_height=True):
+                        get_otp_btn  = gr.Button("Get OTP",  elem_classes=["secondary-btn"])
+                        admin_signin_btn = gr.Button("Sign In", elem_classes=["primary-btn"])
 
                 gr.HTML("""
                 <div class="auth-divider">or</div>
@@ -1292,6 +1432,7 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
                                             elem_classes=["secondary-btn"])
 
             auth_status = gr.HTML()
+
 
     # ════════════════════════════════════════════════════════
     # TAB 2 — Citizen Dashboard  (hidden until citizen logs in)
@@ -1424,7 +1565,7 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
             label="All Complaint Images",
             show_label=False,
             columns=3,
-            rows=1,
+            rows=3,
             height="auto",
             object_fit="cover",
             preview=False,          # ← CRITICAL: disable preview panel (removes the split layout)
@@ -1441,26 +1582,26 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
     # WIRING
     # ════════════════════════════════════════════════════════
 
-    # Role selection (login form)
+    # Role selection (login form) — switches between citizen/admin sub-forms
     citizen_btn.click(
         select_citizen_role,
         inputs=[],
-        outputs=[selected_role_state, role_display]
+        outputs=[selected_role_state, role_display, citizen_login_panel, admin_login_panel]
     )
     admin_btn.click(
         select_admin_role,
         inputs=[],
-        outputs=[selected_role_state, role_display]
+        outputs=[selected_role_state, role_display, citizen_login_panel, admin_login_panel]
     )
 
     # Role selection (signup form)
     signup_citizen_btn.click(
-        select_citizen_role,
+        lambda: ("citizen", _role_selector_html("citizen")),
         inputs=[],
         outputs=[selected_role_state, signup_role_display]
     )
     signup_admin_btn.click(
-        select_admin_role,
+        lambda: ("admin", _role_selector_html("admin")),
         inputs=[],
         outputs=[selected_role_state, signup_role_display]
     )
@@ -1477,10 +1618,10 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
         outputs=[login_form, signup_form]
     )
 
-    # Login
-    login_btn.click(
+    # Citizen Sign In
+    citizen_signin_btn.click(
         login,
-        inputs=[login_email, login_password, selected_role_state, current_user_state],
+        inputs=[login_email, login_password, selected_role_state, current_user_state, admin_otp_input],
         outputs=[
             auth_status,
             current_user_state,
@@ -1488,7 +1629,33 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
             auth_content,
             citizen_tab,
             admin_tab,
-            admin_container,  
+            admin_container,
+            admin_gallery,
+            citizen_stats,
+            citizen_history,
+            notif_bell_html,
+        ]
+    )
+
+    # Admin: Get OTP button
+    get_otp_btn.click(
+        request_admin_otp,
+        inputs=[login_email, login_password],
+        outputs=[auth_status]
+    )
+
+    # Admin: Sign In button
+    admin_signin_btn.click(
+        login,
+        inputs=[login_email, login_password, selected_role_state, current_user_state, admin_otp_input],
+        outputs=[
+            auth_status,
+            current_user_state,
+            header_display,
+            auth_content,
+            citizen_tab,
+            admin_tab,
+            admin_container,
             admin_gallery,
             citizen_stats,
             citizen_history,
@@ -1563,4 +1730,4 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Soft(),
     )
 
 
-demo.launch(debug=True, favicon_path=None, share=False)
+demo.launch(debug=True, favicon_path=None, share=False, css=custom_css, theme=gr.themes.Soft())
