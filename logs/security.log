@@ -50,3 +50,94 @@
 2026-03-08T19:32:22.324555 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
 2026-03-08T19:32:22.334623 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
 2026-03-08T19:32:22.349336 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T20:31:25.028922 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-08T20:35:35.119294 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-08T20:36:02.265035 | IMAGE_ENCRYPTED | original=uploads\Screenshot 2025-11-07 111151.png, encrypted=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-08T20:39:26.358879 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T20:39:26.516949 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-08T20:39:31.879567 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-08T20:39:44.428840 | STATUS_UPDATED | complaint_id=69adddb273548fcab361e36b, old=pending, new=in_progress
+2026-03-08T20:39:59.413759 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-10T22:18:27.519557 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-10T22:20:38.531133 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-10T22:25:13.326310 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-10T22:25:29.976516 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-10T22:26:22.195951 | IMAGE_ENCRYPTED | original=uploads\Screenshot 2026-03-08 004316.png, encrypted=uploads\Screenshot 2026-03-08 004316.png.enc
+2026-03-10T22:26:59.432863 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-10T22:26:59.485667 | IMAGE_DECRYPTED | path=uploads\Screenshot 2026-03-08 004316.png.enc
+2026-03-10T22:27:04.591736 | IMAGE_DECRYPTED | path=uploads\Screenshot 2026-03-08 004316.png.enc
+2026-03-10T22:27:22.441924 | STATUS_UPDATED | complaint_id=69b09a8edaae3ad8721f6d51, old=pending, new=in_progress
+2026-03-10T22:31:12.221619 | IMAGE_DECRYPTED | path=uploads\Screenshot 2026-03-08 004316.png.enc
+2026-03-11T03:50:00.259839 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-11T03:53:01.735203 | IMAGE_ENCRYPTED | original=uploads\Screenshot 2025-11-07 111151.png, encrypted=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T03:54:22.821285 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-11T03:54:23.439664 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T03:54:27.514623 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T03:54:43.677396 | STATUS_UPDATED | complaint_id=69b0e71df8bc350975deb5d9, old=pending, new=in_progress
+2026-03-11T03:54:47.423470 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T04:32:55.488152 | LOGIN_SUCCESS | user=sonali111@gmail.com, role=citizen
+2026-03-11T04:34:16.285257 | IMAGE_ENCRYPTED | original=uploads\Screenshot 2025-11-05 204538.png, encrypted=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-11T04:37:12.367287 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-11T04:37:13.520297 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-11T04:37:13.563309 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T04:37:19.181586 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-11T04:37:19.198552 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T04:37:40.415755 | STATUS_UPDATED | complaint_id=69b0f0c8f8bc350975deb5da, old=pending, new=resolved
+2026-03-11T04:37:43.412110 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-11T04:37:43.433048 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-11T04:39:36.206585 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-11T04:39:36.224161 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-26T19:46:41.790257 | LOGIN_FAILED | user=
+2026-03-28T17:59:37.347023 | LOGIN_FAILED | user=riya123@gmail.com
+2026-03-28T18:00:37.226394 | LOGIN_SUCCESS | user=23bce1572@gmail.com, role=citizen
+2026-03-28T18:01:10.827362 | LOGIN_SUCCESS | user=23bce1572@gmail.com, role=citizen
+2026-03-28T18:02:32.001675 | KYC_SUBMITTED | user_id=24ae9e65-c732-413c-90a9-6cb9c71eba75
+2026-03-28T18:03:24.976502 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-28T18:03:25.952155 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:03:26.026753 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-28T18:03:37.410781 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:03:37.436485 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-28T18:49:44.331226 | LOGIN_SUCCESS | user=23bce1572@gmail.com, role=citizen
+2026-03-28T18:52:01.084045 | LOGIN_SUCCESS | user=23bce1572@gmail.com, role=citizen
+2026-03-28T18:52:41.385808 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-28T18:52:41.454413 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:52:41.479077 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-28T18:52:53.333301 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:52:53.352379 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-28T18:54:00.780767 | IMAGE_ENCRYPTED | original=uploads\Screenshot 2025-11-07 111349.png, encrypted=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-28T18:55:54.185441 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-28T18:55:54.220739 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-28T18:55:54.239694 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:55:54.263836 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-28T18:56:01.215081 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-28T18:56:01.233176 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-28T18:56:01.252960 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:02:01.613761 | LOGIN_SUCCESS | user=23bce1572@gmail.com, role=citizen
+2026-03-30T06:02:40.611276 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-30T06:02:40.809680 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:02:42.714596 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:02:42.907217 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:02:53.302304 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:02:53.370834 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:02:53.455599 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:03:12.699763 | STATUS_UPDATED | complaint_id=69b0f0c8f8bc350975deb5da, old=resolved, new=rejected
+2026-03-30T06:16:43.769472 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-30T06:16:43.847545 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:16:43.865889 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:16:43.881314 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:18:58.083341 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-30T06:18:58.269916 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:18:58.291837 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:18:58.316464 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:19:25.016382 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:19:25.036472 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:19:25.054029 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:19:25.536357 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:19:25.554117 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:19:25.573733 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:19:37.985854 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:19:37.995762 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:19:38.008702 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc
+2026-03-30T06:19:38.206723 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111349.png.enc
+2026-03-30T06:19:38.237553 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-05 204538.png.enc
+2026-03-30T06:19:38.251593 | IMAGE_DECRYPTED | path=uploads\Screenshot 2025-11-07 111151.png.enc

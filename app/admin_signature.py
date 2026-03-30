@@ -171,7 +171,7 @@ def rsa_demo():
         print("  Verification: FAILED ❌")
 
 
-# ── WHERE TO CALL THESE IN YOUR PROJECT ─────────────────────────────────────
+# ── WHERE TO CALL THESE IN PROJECT ─────────────────────────────────────
 #
 #  In auth.py → register_user_wrapper()  (when role == "admin"):
 #      from .admin_signature import generate_admin_keypair

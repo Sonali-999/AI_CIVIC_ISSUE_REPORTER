@@ -128,7 +128,7 @@ def token_required(token: str, required_role: str = None) -> dict:
     return payload
 
 
-# ── WHERE TO CALL THESE IN YOUR PROJECT ─────────────────────────────────────
+# ── WHERE TO CALL THESE IN PROJECT ─────────────────────────────────────
 #
 #  In gradio_app.py → login():
 #      from .jwt_tokens import create_token
@@ -140,7 +140,7 @@ def token_required(token: str, required_role: str = None) -> dict:
 #      try:
 #          payload = token_required(state.get("token"), required_role="citizen")
 #      except ValueError as e:
-#          return f'<div class="status-error">❌ {e}</div>'
+#          return f'<div class="status-error"> {e}</div>'
 #      uid = payload["sub"]
 #
 #  In gradio_app.py → handle_status_update() (admin only):

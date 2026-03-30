@@ -92,7 +92,7 @@ def decrypt_image(enc_path: str) -> bytes:
     return plaintext
 
 
-# ── WHERE TO CALL THESE IN YOUR PROJECT ─────────────────────────────────────
+# ── WHERE TO CALL THESE IN PROJECT ─────────────────────────────────────
 #
 #  In gradio_app.py → process_complaint():
 #      from .image_encryption import encrypt_image

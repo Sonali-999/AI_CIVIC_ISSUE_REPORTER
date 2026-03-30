@@ -3,7 +3,7 @@ complaint_hash.py
 -----------------
 Custom complaint-integrity hashing algorithm for CivicAI.
 
-YOUR OWN ALGORITHM — "CivicHash-512"
+ALGORITHM — "CivicHash-512"
 ======================================
 Upgraded from CivicHash-256. This algorithm combines THREE independent
 cryptographic primitives — AES-256-GCM, HMAC-SHA256, and SHA-512 —
@@ -35,7 +35,7 @@ making it impossible to reproduce without knowing both secret keys.
         Round C = SHA-512( Round_B   +  Round_A      +  salt_bytes )
         Final   = hex( Round_C )  →  128 hex characters = 512-bit digest
 
-  WHY THIS IS "YOUR" ALGORITHM:
+  WHY THIS IS ALGORITHM:
         • No standard library implements this exact combination.
         • The AES-GCM → HMAC → triple-SHA-512 chaining is invented here.
         • Three separate secrets protect three separate layers:
