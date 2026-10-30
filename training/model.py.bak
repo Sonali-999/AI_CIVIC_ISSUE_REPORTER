@@ -1,0 +1,79 @@
+"""
+model.py
+--------
+Architecture definition, shared by training and inference so both build an
+identical network before weights are loaded.
+
+WHY TRANSFER LEARNING
+=====================
+The civic dataset holds roughly a thousand images across a handful of
+categories - far too few to train a convolutional network from scratch without
+severe overfitting. Starting from ImageNet weights means the early layers
+already detect edges, textures and materials (asphalt, plastic, water, rust),
+so only the later, task-specific layers need to learn what distinguishes a
+pothole from a garbage pile.
+
+WHAT IS FROZEN
+==============
+Everything up to layer3 is frozen: those filters are generic and the small
+dataset carries no information that would improve them. layer4 and the
+classification head stay trainable, which is where category-specific structure
+lives.
+"""
+
+import torch
+import torch.nn as nn
+from torchvision import models
+
+from .config import ARCH
+
+
+def build_model(num_classes: int, arch: str = ARCH,
+                pretrained: bool = True) -> nn.Module:
+    """
+    Build the classifier.
+
+    Parameters
+    ----------
+    num_classes : how many civic categories the head predicts
+    arch        : "resnet18" or "resnet50"
+    pretrained  : load ImageNet weights. False at inference time, where the
+                  fine-tuned checkpoint supplies every weight anyway and
+                  downloading ImageNet weights would be wasted work.
+    """
+    if arch == "resnet18":
+        weights = models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None
+        model = models.resnet18(weights=weights)
+    elif arch == "resnet50":
+        weights = models.ResNet50_Weights.IMAGENET1K_V2 if pretrained else None
+        model = models.resnet50(weights=weights)
+    else:
+        raise ValueError(f"Unsupported architecture: {arch}")
+
+    if pretrained:
+        # Freeze the generic feature extractor; unfreeze the last block.
+        for param in model.parameters():
+            param.requires_grad = False
+        for param in model.layer4.parameters():
+            param.requires_grad = True
+
+    in_features = model.fc.in_features
+    # Dropout before the head is the main regulariser on a dataset this small.
+    model.fc = nn.Sequential(
+        nn.Dropout(0.3),
+        nn.Linear(in_features, num_classes),
+    )
+    return model
+
+
+def pick_device() -> torch.device:
+    """Use the GPU when one is usable, otherwise fall back to CPU."""
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def describe_device(device: torch.device) -> str:
+    if device.type == "cuda":
+        name = torch.cuda.get_device_name(0)
+        vram = torch.cuda.get_device_properties(0).total_memory / 1024**3
+        return f"{name} ({vram:.1f} GB VRAM)"
+    return "CPU"

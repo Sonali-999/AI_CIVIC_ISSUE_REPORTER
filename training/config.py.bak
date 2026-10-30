@@ -1,0 +1,127 @@
+"""
+config.py
+---------
+Shared configuration for the CivicAI issue-classification model.
+
+WHAT THIS MODEL DOES
+====================
+It replaces the hosted-LLM API call that used to categorise complaints. Given a
+citizen's photograph it predicts the civic issue category:
+
+    photograph  ->  category  ->  department  ->  title + description
+
+The category comes from a fine-tuned CNN (see train_civic.py). The department
+is a deterministic lookup from that category (DEPARTMENT_MAP below), and the
+title/description are generated from category-specific templates in
+app/issue_text.py. No network call, no API key, no per-request cost.
+
+Trained on "Indian Municipal related" (halog3/ghuyuhguy) - ~708 MB of waste and
+municipal issue photographs.
+"""
+
+from pathlib import Path
+
+# ── Project layout ───────────────────────────────────────────────────────────
+ROOT        = Path(__file__).resolve().parent.parent
+DATA_DIR    = ROOT / "data"
+RAW_DIR     = DATA_DIR / "civic_raw"      # extracted Kaggle download
+SPLIT_DIR   = DATA_DIR / "civic_split"    # train/ val/ test/ built by prepare_civic
+MODELS_DIR  = ROOT / "models"
+FIGURES_DIR = ROOT / "figures"            # PNGs for the paper
+REPORTS_DIR = ROOT / "reports"            # metrics.json, LaTeX tables
+
+# ── Dataset ──────────────────────────────────────────────────────────────────
+KAGGLE_DATASET = "halog3/ghuyuhguy"
+
+# Class names are DISCOVERED from the dataset's folder layout rather than
+# hardcoded, because the exact folders are only known after download. The
+# canonical list is written to models/labels.json at training time and is the
+# single source of truth for inference afterwards.
+LABELS_FILE = MODELS_DIR / "labels.json"
+
+# ── Category -> municipal department routing ─────────────────────────────────
+# Keys are matched case-insensitively against the discovered folder name, using
+# substring matching, so a folder called "garbage_dump" still routes to
+# Sanitation. Anything unmatched falls back to DEFAULT_DEPARTMENT.
+DEPARTMENT_MAP = {
+    "pothole":      "Roads",
+    "road":         "Roads",
+    "crack":        "Roads",
+    "construction": "Roads",
+    "garbage":      "Sanitation",
+    "waste":        "Sanitation",
+    "trash":        "Sanitation",
+    "litter":       "Sanitation",
+    "dump":         "Sanitation",
+    "plastic":      "Sanitation",
+    "dead_animal":  "Sanitation",
+    "dead animal":  "Sanitation",
+    "sewage":       "Water",
+    "sewer":        "Water",
+    "drain":        "Water",
+    "drainage":     "Water",
+    "water":        "Water",
+    "waterlog":     "Water",
+    "flood":        "Water",
+    "leak":         "Water",
+    "streetlight":  "Electricity",
+    "street_light": "Electricity",
+    "light":        "Electricity",
+    "pole":         "Electricity",
+    "wire":         "Electricity",
+    "electric":     "Electricity",
+    "tree":         "Parks & Horticulture",
+    "park":         "Parks & Horticulture",
+    "vandalism":    "Public Works",
+    "graffiti":     "Public Works",
+    "parking":      "Traffic",
+    "traffic":      "Traffic",
+}
+DEFAULT_DEPARTMENT = "General Administration"
+
+# ── Preprocessing ────────────────────────────────────────────────────────────
+# 224 is what the ImageNet-pretrained backbone was trained at; matching it keeps
+# the transferred filters meaningful.
+IMAGE_SIZE = 224
+NORM_MEAN  = (0.485, 0.456, 0.406)
+NORM_STD   = (0.229, 0.224, 0.225)
+
+# ── Splits ───────────────────────────────────────────────────────────────────
+# The test split is held out entirely and only touched by evaluate_civic.py, so
+# the accuracy reported in the paper comes from data the model never saw.
+TRAIN_FRACTION = 0.70
+VAL_FRACTION   = 0.15
+TEST_FRACTION  = 0.15
+SEED           = 42
+
+# ── Training hyperparameters ─────────────────────────────────────────────────
+# Tuned for a 2 GB MX450: batch 32 at 224px fits comfortably in VRAM.
+ARCH          = "resnet18"
+BATCH_SIZE    = 32
+EPOCHS        = 15
+LEARNING_RATE = 3e-4      # head + unfrozen layer4
+WEIGHT_DECAY  = 1e-4
+EARLY_STOP_PATIENCE = 4   # epochs without val-accuracy improvement
+
+# ── Inference ────────────────────────────────────────────────────────────────
+CHECKPOINT = MODELS_DIR / "civic_classifier.pt"
+
+# Below this confidence the prediction is reported as uncertain and the citizen
+# is asked to confirm the category, rather than a wrong department being
+# assigned silently.
+LOW_CONFIDENCE_THRESHOLD = 0.55
+
+
+def department_for(category: str) -> str:
+    """Map a predicted category to the municipal department that owns it."""
+    key = category.strip().lower().replace("-", "_")
+    for needle, dept in DEPARTMENT_MAP.items():
+        if needle in key:
+            return dept
+    return DEFAULT_DEPARTMENT
+
+
+def ensure_dirs() -> None:
+    """Create every output directory the pipeline writes to."""
+    for d in (DATA_DIR, MODELS_DIR, FIGURES_DIR, REPORTS_DIR):
+        d.mkdir(parents=True, exist_ok=True)

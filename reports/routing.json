@@ -1,0 +1,131 @@
+{
+  "model": "ensemble[resnet50, efficientnet_b0] + TTA",
+  "test_images": 203,
+  "category_correct": 172,
+  "category_accuracy": 0.8472906403940886,
+  "errors": 31,
+  "routing_neutral_errors": 11,
+  "routing_correct": 183,
+  "routing_accuracy": 0.9014778325123153,
+  "misrouted": 20,
+  "misrouted_fraction": 0.09852216748768473,
+  "confusion_pairs": [
+    {
+      "true": "illegal_dumping",
+      "pred": "garbage",
+      "count": 5,
+      "same_department": true
+    },
+    {
+      "true": "garbage",
+      "pred": "illegal_dumping",
+      "count": 4,
+      "same_department": true
+    },
+    {
+      "true": "dead_animal",
+      "pred": "pothole",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "dead_animal",
+      "pred": "sewer",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "pothole",
+      "pred": "waterlogging",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "pothole",
+      "pred": "streetlight",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "streetlight",
+      "pred": "waterlogging",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "waterlogging",
+      "pred": "pothole",
+      "count": 2,
+      "same_department": false
+    },
+    {
+      "true": "dead_animal",
+      "pred": "streetlight",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "garbage",
+      "pred": "sewer",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "illegal_dumping",
+      "pred": "sewer",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "illegal_dumping",
+      "pred": "dead_animal",
+      "count": 1,
+      "same_department": true
+    },
+    {
+      "true": "pothole",
+      "pred": "sewer",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "streetlight",
+      "pred": "dead_animal",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "streetlight",
+      "pred": "sewer",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "streetlight",
+      "pred": "pothole",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "waterlogging",
+      "pred": "dead_animal",
+      "count": 1,
+      "same_department": false
+    },
+    {
+      "true": "waterlogging",
+      "pred": "sewer",
+      "count": 1,
+      "same_department": true
+    }
+  ],
+  "departments": {
+    "dead_animal": "Sanitation",
+    "garbage": "Sanitation",
+    "illegal_dumping": "Sanitation",
+    "pothole": "Roads",
+    "sewer": "Water",
+    "streetlight": "Electricity",
+    "waterlogging": "Water"
+  }
+}

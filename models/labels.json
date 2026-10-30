@@ -1,0 +1,20 @@
+{
+  "classes": [
+    "dead_animal",
+    "garbage",
+    "illegal_dumping",
+    "pothole",
+    "sewer",
+    "streetlight",
+    "waterlogging"
+  ],
+  "departments": {
+    "dead_animal": "Sanitation",
+    "garbage": "Sanitation",
+    "illegal_dumping": "Sanitation",
+    "pothole": "Roads",
+    "sewer": "Water",
+    "streetlight": "Electricity",
+    "waterlogging": "Water"
+  }
+}

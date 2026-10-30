@@ -1,0 +1,192 @@
+2026-03-08T18:14:01.364265 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T18:14:37.648223 | IMAGE_ENCRYPTED | original=uploads\broken-urban-street-lamp-photo.jpg, encrypted=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:13.594548 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T18:15:13.604747 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T18:15:13.627071 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:13.667651 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T18:15:13.696896 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T18:15:53.649184 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T18:15:53.666638 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T18:15:53.694308 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T18:15:53.719547 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T18:15:53.753999 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T18:16:10.443099 | STATUS_UPDATED | complaint_id=69adada857418c7418c6c0ae, old=pending, new=resolved
+2026-03-08T19:12:02.650782 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T19:12:12.165373 | IMAGE_ENCRYPTED | original=uploads\potholes.jpg, encrypted=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.478500 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:12:43.486706 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:12:43.496953 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:12:43.549346 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.559952 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:12:43.577515 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:13:22.060594 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:13:22.073004 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:13:22.086999 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:13:22.105633 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:13:22.117012 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:13:22.132994 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:18:53.330368 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:18:53.339428 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:18:53.351264 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:18:53.363008 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:18:53.375191 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:18:53.392460 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:22:24.320764 | LOGIN_SUCCESS | user=nehasharma180104@gmail.com, role=citizen
+2026-03-08T19:22:49.921735 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:22:49.934632 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:22:49.949864 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:22:49.963269 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:22:49.974598 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:22:49.991602 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:25:22.838883 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:25:22.853020 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:25:22.865589 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:25:22.881232 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:25:22.892752 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:25:22.907438 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-03-08T19:32:22.230389 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin
+2026-03-08T19:32:22.289687 | IMAGE_DECRYPTED | path=uploads\WATERLOGGING.jpg.enc
+2026-03-08T19:32:22.308739 | IMAGE_DECRYPTED | path=uploads\broken-urban-street-lamp-photo.jpg.enc
+2026-03-08T19:32:22.324555 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:32:22.334623 | IMAGE_DECRYPTED | path=uploads\potholes.jpg.enc
+2026-03-08T19:32:22.349336 | IMAGE_DECRYPTED | path=uploads\garbage.webp.enc
+2026-09-06T20:07:13.448195 | DEMO_EVENT | first entry | 76253f55859630a5e323a950c8568a13b802da68d79ff131970b50b06ab92651
+2026-09-06T20:07:14.529860 | DEMO_EVENT | second entry | 988554016953f1f1c87c7c5c01f0bbabc4f6f2ff2d512566889c7d0af2b37293
+2026-09-06T20:16:33.423102 | COMPLAINT_CLASSIFIED | category=street_light, department=Electricity, confidence=0.386, low_confidence=True | e90db0985186d238068c70d30393f215927d979d0eb23b06b7fd98058f19cfb7
+2026-09-06T20:16:34.474071 | IMAGE_ENCRYPTED | original=uploads\smoketest_photo.jpg, encrypted=uploads\smoketest_photo.jpg.enc | 187ccb3fc84016a10aff3eeaebf8871144378db76e1e362714a103d9f8a786f8
+2026-09-06T20:16:34.545944 | COMPLAINT_SUBMITTED | complaint_id=6a9dca220206458561dab6f0, category=Street Lighting, department=Electricity, gps=False | 712c5d6be7f0e3210d0fd14036976304b3822a196c2ddd5e24b21c527a961ef9
+2026-09-06T20:16:34.578624 | STATUS_UPDATED | complaint_id=6a9dca220206458561dab6f0, old=pending, new=in_progress | e878932762876869caf6708b9f152fd36f84459e66107dd5f35ef590a185e996
+2026-09-06T20:18:11.528792 | LOGIN_FAILED | user=sonalihike00000@gmail.com | 952d43cea8662a583b25643152cd28055053b23c102078eedbdb7291baba9578
+2026-09-06T20:18:25.109273 | LOGIN_FAILED | user=sonalihike00000@gmail.com | 147c1e3488adaa7d1dc7d1e11980ee8e093c07d40dc680180e0e0ea269063f20
+2026-09-06T20:18:59.942799 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 35308506af623823f2dd4c9f3980c5d79a8739ef6cb0cc8fba860c7e6e099401
+2026-09-07T08:47:15.205102 | COMPLAINT_CLASSIFIED | category=pothole, department=Roads, confidence=0.996, low_confidence=False | 5cd0371907dab0d968f1ad7d57cd9a334e205e6b19bcc80a5b9683be7d2efa8d
+2026-09-07T08:47:17.788530 | COMPLAINT_CLASSIFIED | category=garbage, department=Sanitation, confidence=0.914, low_confidence=False | 1281a0dc20e7826ee5847d9bdec49ff5d5ee7e2ee5b0566f3f4d9fddb6a8a38b
+2026-09-07T08:47:18.099589 | COMPLAINT_CLASSIFIED | category=waterlogging, department=Water, confidence=0.409, low_confidence=True | 3b4f060da47c1482564d7d195e594d9f11fd06720cdb6b87fefef41769fd754d
+2026-09-07T08:47:18.246294 | COMPLAINT_CLASSIFIED | category=sewer, department=Water, confidence=0.663, low_confidence=False | 1b75b46563ab6987e7145e87b16e652ec20710c5b88bb336eccdbc8aff205583
+2026-09-07T08:47:18.371168 | COMPLAINT_CLASSIFIED | category=waterlogging, department=Water, confidence=0.940, low_confidence=False | 95a4345b6850f3f7a862106ab9530a43e1df5aba4660b956c03aca6aa99a1cc2
+2026-09-07T08:47:18.504869 | COMPLAINT_CLASSIFIED | category=dead_animal, department=Sanitation, confidence=0.772, low_confidence=False | 6bbea96a9536eebb8b751fe7dacfead19a220b5b0e65a0cc46ef0f8b10ae3d72
+2026-09-07T08:47:18.647158 | COMPLAINT_CLASSIFIED | category=garbage, department=Sanitation, confidence=0.863, low_confidence=False | 5edbeb42da4732f1d224e1ad3e54a93aad44275b7a2309f7fa5a224a52bef238
+2026-09-07T09:53:12.696777 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 1bbda68de4ae4e8bc00a489a11fef80ec02c046d7894cb3ab57c875e114a1f59
+2026-09-07T09:53:29.358770 | COMPLAINT_CLASSIFIED | category=pothole, department=Roads, confidence=0.983, low_confidence=False | dff001f21e7db6c9f532ca93131d94c5c901f7ec2bcc61be1f8fc63e8ec55887
+2026-09-07T09:53:29.481403 | IMAGE_ENCRYPTED | original=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png, encrypted=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 9992fd9d5d9ebc77ed6af750103e083be23371ae4285581664b59049df2ca58a
+2026-09-07T09:53:29.578763 | COMPLAINT_SUBMITTED | complaint_id=6a9e89999e5b10a600965f48, category=Pothole, department=Roads, gps=False | 730c2e2925f34820c16f0adce08df0e03e580b161af3f04b4c76a48b0ffba4e5
+2026-09-07T09:53:52.819837 | COMPLAINT_CLASSIFIED | category=pothole, department=Roads, confidence=0.983, low_confidence=False | b46a1f07fce70a49355481cc7c6e7f2df7b2c3ffe07bc69fd8a25ec7589a2a93
+2026-09-07T09:53:52.859167 | IMAGE_ENCRYPTED | original=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png, encrypted=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | 7f14d7d1bfc2d92d5d4b9cacb30344340068f90641134d326bd19a6c80b29837
+2026-09-07T09:53:52.885873 | COMPLAINT_SUBMITTED | complaint_id=6a9e89b09e5b10a600965f49, category=Pothole, department=Roads, gps=True | 48a802f4ceb2575a36d01bfd9e10c0e584ed875b59e75585fe8c1bab67c14979
+2026-09-07T10:00:08.316356 | ADMIN_CREDENTIALS_RESET | email=admin@gmail.com | 0326553519a6d20af6e0caa5aadd97a9810abeb9aa22b608a58bdaae4d54e268
+2026-09-07T10:03:24.154744 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin | acbfe500e52e95f1a932203f05eaba4c359d75f6c8ea24907d47182d71253c4c
+2026-09-07T10:03:24.349479 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | 548086d7674c6c5bb683dcd085a79927b9d33e000775a28fe1c70fa6ce2497cc
+2026-09-07T10:03:24.416437 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 35807d6aaea2edba33c9d9c0fcf0558fabfdc98a6b8200c9bcae29104b2e2886
+2026-09-07T10:03:38.380324 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | 0403f0112634de406b48e642a386b830b98b8e250385296891b3fcdac970b5f8
+2026-09-07T10:03:38.401484 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 841ca8bd1f4279ab452139aff6b9a2614b1e040d7de4118b72721553fa32838b
+2026-09-07T10:04:11.910039 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | eab98ba83abea3e231fa59b75152f8216740a942096c99637d4b5895882a68ea
+2026-09-07T10:04:11.933702 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 8822575ac8351303c9fa80106c6d1b0674c7eb7b6bd453e8798493c7d547f948
+2026-09-07T10:04:39.415751 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | dbfcc449095da71e6bf1b4a97b21a415f8d9b82812d6cce50aaa37c1d23f164f
+2026-09-07T10:05:19.514692 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 723e9b0e698f56300f1c1ca87d08129877977298d7538e0427a67a9c33b14010
+2026-09-07T10:07:04.815703 | STATUS_UPDATED | complaint_id=6a9e89b09e5b10a600965f49, old=pending, new=in_progress | e9b076dc2d820d92eec21d1ed4ed36c6ddaf5649e3c556c06d3687582fb73062
+2026-09-07T10:16:06.328147 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin | 048224c610f2b2d6258abb80a839f5ee167d9a5d47fc61ab31fddb900c2962ed
+2026-09-07T10:16:06.347487 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | a7c407179798d23dc7d3af1d44f5e9d05e2194aac0411eb13daa358c6742f642
+2026-09-07T10:16:06.364679 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 59a785c78cbb96d7592edc8b3c5092dd77cd7e2835b4fa0c01f47991d2be765f
+2026-09-07T10:16:45.080555 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | e8d6ed51c8b29183c1c9067c8681c4e1c10e417949b6f89a529ef2a5746ef150
+2026-09-07T10:16:45.107066 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 337765aa6b4ec62d6c00e33899a5e0d7f34cecc24e9dedb7e153db20f8b89dcd
+2026-09-07T10:17:05.763625 | STATUS_UPDATED | complaint_id=6a9e89b09e5b10a600965f49, old=pending, new=in_progress | cb67fe5d4146c47e21f6f5c006d4af53f9af716c34fc378eca1588e437650c17
+2026-09-07T10:17:05.820977 | IMAGE_DECRYPTED | path=uploads\20260907095352841764_Screenshot 2026-09-07 015001.png.enc | 2e9d50c86ee5f54228af894c147141be3fffb9ec74c119db2f6e4e7367bafd6d
+2026-09-07T10:17:05.833588 | IMAGE_DECRYPTED | path=uploads\20260907095329389478_Screenshot 2026-09-07 015001.png.enc | 1a4f19987da03810fe1d19f933b051ce13981f1c9019b8e130ce73ff2622a093
+2026-09-07T10:17:35.732344 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 2ead5626ecca3a92d07b035592864f44a1019054a3c753bdb311f8e9396a6079
+2026-09-07T10:26:57.668273 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 6d9bdb9434da3ade9020dc1ad4064f482b7c51b8d5b99020a3c15625e753f22e
+2026-09-07T10:26:58.351196 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 17625d4cdd23ba24ab49b8c45425d98752911c57c169476cd65a73821bd3ea7c
+2026-09-07T10:26:58.379674 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c522d64dc3afc6618f2c24d9c57e9ccc167024610ea56995001a112bdae7602d
+2026-09-07T10:26:58.394628 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 11271da674e4d32de6279c3f1e14a3b5e5df987bbe62bf102798fc3d92f3e42a
+2026-09-07T10:26:58.408308 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 1032f69128cfa2b70a89eed2d541225b32c71e0514dfd35b7fa717747eef33df
+2026-09-07T10:26:58.423143 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | df7a2dec27be720cad7265bf996e244b2565566964d8d15309e68fdb30ae499e
+2026-09-07T10:26:58.439154 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | f681d1e37742d0c30fb95d6dac73e8582a84f508c35d073f1a78aa655aaa224a
+2026-09-07T10:26:58.453264 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c05a60bdb8631b9424c1a6450ca3712afb092a0a6763b8e715d552f4cc7ef667
+2026-09-07T10:26:58.469309 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | d2cd871b4a17e8816e47c9af8630f39ffe14203e05a759f62ef3d776bdf0d1df
+2026-09-07T10:26:58.484637 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 69eefb11d4392704e248edcb2a39ca37ba5982536d2da6b85138c23d4f917147
+2026-09-07T10:26:58.500703 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 74acceb0b26b142bd7e3483b93196dfec89df04002abecb9595938188f5894ed
+2026-09-07T10:26:58.516930 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | a7af595d2fbdcf471071662b57bc1fea5f223ddde8b7f10bbad3367776375ed5
+2026-09-07T10:26:58.534164 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | ab412aed45d9df04167b75024a0a21d5d037a32105f6275a5a42ed499cde716a
+2026-09-07T10:26:58.548517 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | d8b5cf98981ee447da768b03ed3699cb1560328f8948a96e9c85e6a5c21a85ce
+2026-09-07T10:26:58.563451 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 1a05c7a73ab52c97a5eb76d1341a7c38756bf91f166c1d95d4694a2a50e9f709
+2026-09-07T10:26:58.580432 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 87eb8198db275c3097e8de0e87f6515692190b015353e37f9de5a28e8130f184
+2026-09-07T10:26:58.596149 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | a1d4ecf2aecd6095527d4aa2ee0bacdcd8604a3b1a969d3e209dfbb8d5c8deae
+2026-09-07T10:26:58.615121 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 6b9bda4055025e75fd3ec47cf7b298003da78d5ea7cfce5bc4e0c1f0e356f7c0
+2026-09-07T10:26:58.633550 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c3b45f8e4fd8060be6a9811de7137eafceb943841b5b7994d01fd9c4bfdec26e
+2026-09-07T10:26:58.649303 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | bef44797c1b6c083354bdbecdc520740bd6f0eeaf3bd8245ff3a4eebd3e7daee
+2026-09-07T10:26:58.664510 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | ea9e14aba609897cffe0f70769a937fa65c0c14611c0376181e1be331e32d0fc
+2026-09-07T10:26:58.678597 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | b3fe277984bb035e936b6a6a9af278de77c2554c8307bcedd161ca8b0b5d3652
+2026-09-07T10:26:58.694804 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 88d1608f489b4641a2714dd66c7fb85991d11892f608629c08b522b4df75e1c9
+2026-09-07T10:26:58.709950 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 8409255dbb97116c7691ae109788e797fe8250dc003028f377f1e23bf228ad4f
+2026-09-07T10:26:58.727262 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 196aa7d80f352680c5ea95303855272ec1b3966a634c4800bcaab20787b0f26c
+2026-09-07T10:26:58.746167 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 42d62b13443a53fff0883e756d459e83af01208f02a12d15150ef4d45d408e0c
+2026-09-07T10:26:58.761152 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | b02ef812f3434a590a3ce503805f91497710cfbc067922d62345f3ec04fccf3c
+2026-09-07T10:26:58.776464 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 996e3f44f4edcdcd4ee4c7eb9d03ec3bcf4a348b7465c7ff3de412e5c257221c
+2026-09-07T10:26:58.791804 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | b824e02bc3aec54ad4e0116ddf5371d82225d7506494ebdda7bd466a45e97b23
+2026-09-07T10:26:58.807977 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | e1e6eff9c083458399d259d7fe06bdb93e61937d41d8e5f2646f1596cd4bc9da
+2026-09-07T10:26:58.851811 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 84179b86c237ab3dcf6e417b5c6fa1d9c48c3718a44284bd19772cfc3ec926af
+2026-09-07T10:26:58.864913 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | bf0f0f49f6e7b09dffb04cf561463b87248b66a06f1619cdafe81ef0a04b020c
+2026-09-07T10:26:58.878878 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | fce1d991e7e78a5be0391d3260deb143a4b73077f5bb4784b30d47ac65f2edd8
+2026-09-07T10:26:58.894079 | IMAGE_ENCRYPTED | original=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg, encrypted=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 8e4e71d0a916387aef668eee34909ab1a611e9ef75ed765312e82566e799ab56
+2026-09-07T10:26:58.924128 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | b472a05d83f7fc95d71f5215299a04e5cec7bdb5a55b938e7e700c879dab121b
+2026-09-07T10:26:58.936722 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | ee351e56d79cf19925b8bec3f86efbd4065f7acd9a81849f4fdc41cec038e93c
+2026-09-07T10:26:58.952247 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | a42641f7be45354efd9065f5cd5d6d18e46f0bd27e22f577d61cef15a675a506
+2026-09-07T10:26:58.971014 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | b115460d21d1e1046c6bc215c09e80d257c1bc092f0fbe0be2ec29357fe4c864
+2026-09-07T10:26:58.988768 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 18020578c125c1ded93b1e32b5f7ca6528e7ae633ed9ed8041a3c817a8b749fc
+2026-09-07T10:26:59.003118 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 99ed5d1247b0dacdc2a373f9e8597fc794a6a4dd531e7112c934e9d4d50a12e9
+2026-09-07T10:26:59.017222 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 32cece8a7445269dd4ad9a81b3633b89a2eccfb14c8930cb25a7ae89e96bfdb7
+2026-09-07T10:26:59.031898 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | ea00f57ab6a426c9b7903b019c355675aef04c8dae5caa54c1e82c5e0428feb7
+2026-09-07T10:26:59.046184 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c8112d18f711f0b979b0d16b9b148fd16561672094e629ebee0154ceb05f0be6
+2026-09-07T10:26:59.058401 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 98f156c18327d2abbccd4c01d9136c54cbd505385c5a8c840b6373710d883e5f
+2026-09-07T10:26:59.072167 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 96a23a74b6fe4e4a211e6d783c32eba980df10b652440b36e087936104b1f3ed
+2026-09-07T10:26:59.085188 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | f080495dbe3ba81cfce7fc5e108c60a9c8d204317fe01b42073b9843a3640ce2
+2026-09-07T10:26:59.100415 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 40f6b985426a389a466ae28fefbf895189d32118d8d50172393a2adbc38efff1
+2026-09-07T10:26:59.112388 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c526e3add6be27a6ceda080720cad237b30e7729af634e9aa5320d84f8213ade
+2026-09-07T10:26:59.125275 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | cd25699d6072f067289268fc9dc6a6a3a4d50de201155aec22e6ce30e4cac527
+2026-09-07T10:26:59.137545 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | bb9879366cca38a09e741467464d2050d32f03720a12dd64228ecbfe1ea1f61a
+2026-09-07T10:26:59.149193 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | e0871a49f9895f9779d15fb2145347f5793373b53d5dcfea09f8cf1d7b363c4e
+2026-09-07T10:26:59.162679 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | cc5a93510eda3e044302a8cfbe7925d1fc7b203473433ca5d93696423b4bbce0
+2026-09-07T10:26:59.174433 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 13349a07bcf39caf5433f8795e4f89cb7d6c648ec16ab231a85a882018604f4c
+2026-09-07T10:26:59.189262 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 51a966703c10c8aa489376b9a438bd3a4180dd2264e067d0587c6efdf88a22fc
+2026-09-07T10:26:59.202873 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 8dbe6d37142365c5fa1ba4bbf1435e9e18a7a7b406b7e019cbf02565b3934031
+2026-09-07T10:26:59.218095 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 3377716907ffb70aa4047bb842154c89a688c97a3445aabb771cf1609896feec
+2026-09-07T10:26:59.230478 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 52caebde3593c3b9755208171ae45171c86be2b4d4e945f99cd796c9e7c4ee0f
+2026-09-07T10:26:59.244021 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | cb22292c31172cf56c36dce45bc452e1779522ce09b15471ab5676e888ff7225
+2026-09-07T10:26:59.256248 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 761a75eac9790ec8ffb211932b004c03609fca9bf04021b2634ceb9d1a4f9ddd
+2026-09-07T10:26:59.268463 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | c5106ded2060512b6b6f3d46d4051af8146498558f2faa2b8a1d359927de50cc
+2026-09-07T10:26:59.279505 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 498e6bcca5d20bb0726117cc58e87e0b19e44efab32ba3b10a4e4e7577695270
+2026-09-07T10:26:59.291263 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 8d16a24842778099c1c8abdfe0f0758a4b76def75708fdada84887f6c892de69
+2026-09-07T10:26:59.302471 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 2ad0bfa4f7b5d1684a24357a2b8a6c22823aad44032e6897f15edce17d054218
+2026-09-07T10:26:59.313516 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | db20b9680e308dd954c265b3f1961bd34cc49a60b69e4a7063c431521b885b46
+2026-09-07T10:26:59.330384 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 48b3d34e62d34d8087cced1fe0994e15baac6e84b15fa6206fa67de38241c6d1
+2026-09-07T10:26:59.344668 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 9935a184aa2f2ea3b1a180fd5f600957ff004551ebef1320e4245e351ecf5231
+2026-09-07T10:26:59.356004 | IMAGE_DECRYPTED | path=C:\Users\sonal\AppData\Local\Temp\bench_photo.jpg.enc | 64de477be726ac7fd15c1d324ca21a01d685711d8a48e9a86122b0c32bc3dbfd
+2026-09-07T18:31:46.616254 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 3401d63ce9accfbea679ea7731c18833591dfe80b2b36565aaa7585a8d60c8f3
+2026-09-07T18:32:38.451146 | COMPLAINT_CLASSIFIED | category=garbage, department=Sanitation, confidence=0.758, low_confidence=False | 3ba8e5e73f2d6e63491b62ddfae86f204db832b8c17ef3b7e6cb87801cf6f537
+2026-09-07T18:32:38.697459 | IMAGE_ENCRYPTED | original=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png, encrypted=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | fd3242f14dbc466e3ffdfcdbec68cc064dab994b2238e106b3bb717efca453cf
+2026-09-07T18:32:39.368363 | COMPLAINT_SUBMITTED | complaint_id=6a9f0346bdf9e5da5fdf58ed, category=Garbage, department=Sanitation, gps=True | 0cd0df9a302c037d2393d252b2f50a8ce45df88d2a2117869150802ea8d1314f
+2026-09-09T05:23:48.940518 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 59c4fa105d6658f2cf0a37c8bc12984514decbe178c72bc8b6fcc5651684bf3b
+2026-09-09T05:24:01.818961 | LOGIN_SUCCESS | user=sonalihike00000@gmail.com, role=citizen | 745aa9867e1b9ab57cb87112119c5d995db78aaaa46d0f69563d67dca6a82ad4
+2026-09-09T05:24:46.096457 | COMPLAINT_CLASSIFIED | category=pothole, department=Roads, confidence=0.983, low_confidence=False | 5f8b76a24194b4533b9754e733afe3c9a134508b0e0a2f3a4db825f5315d78c0
+2026-09-09T05:24:46.227278 | IMAGE_ENCRYPTED | original=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png, encrypted=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | 1188e8c8e698d49a8f8b9f381305176148f6d98ec3c6feb88127f0a79b26ab20
+2026-09-09T05:24:46.311512 | COMPLAINT_SUBMITTED | complaint_id=6aa0ed9e59c207be35effa63, category=Pothole, department=Roads, gps=True | 437e903e367388fe274060ce13f4d3a3ad75603b609c2830d768c2415b97cc22
+2026-10-22T10:09:48.573712 | LOGIN_SUCCESS | user=s@gmail.com, role=citizen | 3cbbc3a33586457141b5a1a5bad79769f9eff03a90fdbe9dd56a5c38a8d7d2b8
+2026-10-23T06:35:01.092602 | ADMIN_CREDENTIALS_RESET | email=admin@gmail.com | 129a850913dfac8d2f4e4197916a5b2ce979bc036ebbe935c7b31e177045c27b
+2026-10-23T06:37:56.437798 | LOGIN_SUCCESS | user=admin@gmail.com, role=admin | 81e377665c818dac3c128c2e90a12ae9c837744cb6455627869dc24eca865639
+2026-10-23T06:37:56.892056 | IMAGE_DECRYPTED | path=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | 7629b71d761b475a189333deadddd9739447eec06d2c75fb58230818d5c8d909
+2026-10-23T06:37:57.188993 | IMAGE_DECRYPTED | path=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | 96ad98f30a195630dadcf45e8b63013ec579ada33f79cee55200f2231b6ba329
+2026-10-23T06:38:05.432837 | IMAGE_DECRYPTED | path=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | db12185c481ec474b170346b962a14c4624259f797b67e139317dd2813eb4b8e
+2026-10-23T06:38:05.909609 | IMAGE_DECRYPTED | path=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | 9d98762dcabb18141116b78b262a4405d44ca2cb1ac18f3e8826f92fabbd3f00
+2026-10-23T06:38:53.063836 | LOGIN_SUCCESS | user=s@gmail.com, role=citizen | 79c92072fa8c8044738f72acf0c8f6d1727441c41d6bd3201c7c2189cf19b54f
+2026-10-23T06:40:06.422566 | COMPLAINT_CLASSIFIED | category=streetlight, department=Electricity, confidence=0.552, low_confidence=False | 8a15be81083d09bc039df2f3e5ebf6bae6dfedfe3b79c814205370663597868d
+2026-10-23T06:40:06.662481 | IMAGE_ENCRYPTED | original=uploads\20261023064006527855_Screenshot 2026-10-22 154126.png, encrypted=uploads\20261023064006527855_Screenshot 2026-10-22 154126.png.enc | 20b6c5ad60f0f45da2c3ac6dde06e84ffb71488c04de872465551e06e3ba97c5
+2026-10-23T06:40:06.838949 | COMPLAINT_SUBMITTED | complaint_id=6adb0146b503a30ae9e20a15, category=Streetlight, department=Electricity, gps=True | 544d9966af488d642bf751bbc213b6910be206e05e8a11f9e4703503e6c4e864
+2026-10-23T06:40:33.836468 | IMAGE_DECRYPTED | path=uploads\20261023064006527855_Screenshot 2026-10-22 154126.png.enc | abbbe75ba8c112161e1c0344b3baf7923215a9decafcac5e1b184b0d073096e6
+2026-10-23T06:40:33.988129 | IMAGE_DECRYPTED | path=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | 3d18102c5270b0ab101478d0b9b153e5c9052a7174221ed7868f1a3b9e11146c
+2026-10-23T06:40:34.142608 | IMAGE_DECRYPTED | path=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | af806904af4bbc9a13957de0b4a14da5ce0a08819677ca96fc08898a68130f13
+2026-10-23T06:42:05.066431 | IMAGE_DECRYPTED | path=uploads\20261023064006527855_Screenshot 2026-10-22 154126.png.enc | 3e035332dec7d4b7f50222e24a834ffe15a45cdd9759b770b7eecf55eade912e
+2026-10-23T06:42:05.414113 | IMAGE_DECRYPTED | path=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | 6d76cfd470d24cf0d734a15abd0829498637a147b0fb4019a4a3195149533c95
+2026-10-23T06:42:06.099711 | IMAGE_DECRYPTED | path=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | 305504e6e8bf684267c0873d83e9640251824fe813fda3f1fc7df8d44a9a5e10
+2026-10-23T06:42:50.109786 | STATUS_UPDATED | complaint_id=6adb0146b503a30ae9e20a15, old=pending, new=in_progress | 6de2cfe8406d6ed5895d0555b9e70f69f1cf70b53db7513c97e86552e013cbd8
+2026-10-23T06:42:50.419703 | IMAGE_DECRYPTED | path=uploads\20261023064006527855_Screenshot 2026-10-22 154126.png.enc | 672e9ce0e401d519caef31f468d2fd13475b7dcc58423d120afb44bded492e08
+2026-10-23T06:42:50.851450 | IMAGE_DECRYPTED | path=uploads\20260909052446136013_Screenshot 2026-09-07 015001.png.enc | cfaa8b8af806844cd5f16ee43a2478fcd4b6c6ae08e8a702dfad5c0d0a233f8e
+2026-10-23T06:42:51.006875 | IMAGE_DECRYPTED | path=uploads\20260907183238529694_Screenshot 2026-09-07 015139.png.enc | e641591df4d6bf2938b21808dbac7946cb43185d7b8b9077f2140591a398c058

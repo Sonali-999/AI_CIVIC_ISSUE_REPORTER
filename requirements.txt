@@ -1,0 +1,29 @@
+# ── Web interface ────────────────────────────────────────────────────────────
+gradio
+python-dotenv
+
+# ── Database ─────────────────────────────────────────────────────────────────
+pymongo
+
+# ── Cryptography (bcrypt, AES-256-GCM, ECDSA P-256, CivicHash-512, JWT) ──────
+bcrypt
+cryptography
+PyJWT
+
+# ── Imaging ──────────────────────────────────────────────────────────────────
+Pillow
+
+# ── Geolocation (Nominatim reverse geocoding) ────────────────────────────────
+requests
+
+# ── Issue classifier ─────────────────────────────────────────────────────────
+# CUDA build. For a CPU-only machine, drop the extra-index-url line below and
+# plain "pip install torch torchvision" will fetch the CPU wheels instead.
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch
+torchvision
+
+# ── Model training and evaluation ────────────────────────────────────────────
+scikit-learn
+matplotlib
+kaggle

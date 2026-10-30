@@ -1,0 +1,148 @@
+"""
+train_civic.py
+--------------
+Fine-tune the civic-issue classifier.
+
+    python -m training.train_civic
+
+Saves the best-validation checkpoint to models/civic_classifier.pt together
+with the class list, so inference never has to guess the label order. Training
+history is written to reports/training_history.json for the paper's figures.
+"""
+
+import json
+import time
+
+import torch
+import torch.nn as nn
+
+from .config import (
+    ARCH, BATCH_SIZE, CHECKPOINT, EARLY_STOP_PATIENCE, EPOCHS, IMAGE_SIZE,
+    LEARNING_RATE, REPORTS_DIR, SEED, WEIGHT_DECAY, department_for, ensure_dirs,
+)
+from .data import class_names, class_weights, make_loaders
+from .model import build_model, describe_device, pick_device
+
+
+def run_epoch(model, loader, criterion, device, optimizer=None) -> tuple[float, float]:
+    """Run one pass. Passing an optimizer switches to training mode."""
+    training = optimizer is not None
+    model.train(training)
+
+    total_loss, correct, seen = 0.0, 0, 0
+
+    with torch.set_grad_enabled(training):
+        for images, labels in loader:
+            images = images.to(device, non_blocking=True)
+            labels = labels.to(device, non_blocking=True)
+
+            outputs = model(images)
+            loss = criterion(outputs, labels)
+
+            if training:
+                optimizer.zero_grad(set_to_none=True)
+                loss.backward()
+                optimizer.step()
+
+            total_loss += loss.item() * labels.size(0)
+            correct += (outputs.argmax(1) == labels).sum().item()
+            seen += labels.size(0)
+
+    return total_loss / max(seen, 1), correct / max(seen, 1)
+
+
+def main() -> None:
+    ensure_dirs()
+    torch.manual_seed(SEED)
+
+    device = pick_device()
+    classes = class_names()
+
+    print("\n  CivicAI issue classifier - training")
+    print("  " + "=" * 58)
+    print(f"    Device      : {describe_device(device)}")
+    print(f"    Architecture: {ARCH} (ImageNet-pretrained)")
+    print(f"    Input size  : {IMAGE_SIZE}x{IMAGE_SIZE}")
+    print(f"    Categories  : {len(classes)} -> {', '.join(classes)}")
+
+    train_loader, val_loader, _ = make_loaders(BATCH_SIZE)
+    print(f"    Train/Val   : {len(train_loader.dataset):,} / {len(val_loader.dataset):,} images")
+    print("  " + "=" * 58 + "\n")
+
+    model = build_model(len(classes)).to(device)
+
+    # Weighted loss counteracts the dataset's class imbalance; label smoothing
+    # stops the network becoming overconfident, which keeps the confidence
+    # scores shown to citizens meaningful.
+    criterion = nn.CrossEntropyLoss(
+        weight=class_weights().to(device), label_smoothing=0.05
+    )
+    trainable = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.AdamW(trainable, lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
+
+    history = []
+    best_acc, best_epoch, since_improved = 0.0, 0, 0
+    started = time.time()
+
+    for epoch in range(1, EPOCHS + 1):
+        t0 = time.time()
+        train_loss, train_acc = run_epoch(model, train_loader, criterion, device, optimizer)
+        val_loss, val_acc = run_epoch(model, val_loader, criterion, device)
+        scheduler.step()
+
+        history.append({
+            "epoch": epoch,
+            "train_loss": train_loss, "train_acc": train_acc,
+            "val_loss": val_loss, "val_acc": val_acc,
+            "lr": scheduler.get_last_lr()[0],
+        })
+
+        # Flush history every epoch, not just at the end: an interrupted run
+        # otherwise loses the whole training curve even though its best
+        # checkpoint survived.
+        (REPORTS_DIR / "training_history.json").write_text(
+            json.dumps(history, indent=2), encoding="utf-8"
+        )
+
+        marker = ""
+        if val_acc > best_acc:
+            best_acc, best_epoch, since_improved = val_acc, epoch, 0
+            torch.save({
+                "state_dict": model.state_dict(),
+                "classes": classes,
+                "departments": {c: department_for(c) for c in classes},
+                "arch": ARCH,
+                "image_size": IMAGE_SIZE,
+                "val_accuracy": val_acc,
+                "epoch": epoch,
+            }, CHECKPOINT)
+            marker = "  <- best, saved"
+        else:
+            since_improved += 1
+
+        print(
+            f"    epoch {epoch:>2}/{EPOCHS}  "
+            f"train {train_loss:.3f}/{train_acc:6.2%}   "
+            f"val {val_loss:.3f}/{val_acc:6.2%}   "
+            f"{time.time() - t0:5.1f}s{marker}"
+        )
+
+        if since_improved >= EARLY_STOP_PATIENCE:
+            print(f"\n    No improvement for {EARLY_STOP_PATIENCE} epochs - stopping early.")
+            break
+
+    (REPORTS_DIR / "training_history.json").write_text(
+        json.dumps(history, indent=2), encoding="utf-8"
+    )
+
+    print("\n  " + "=" * 58)
+    print(f"    Best validation accuracy: {best_acc:.2%} (epoch {best_epoch})")
+    print(f"    Total time              : {(time.time() - started) / 60:.1f} min")
+    print(f"    Checkpoint              : {CHECKPOINT}")
+    print("  " + "=" * 58)
+    print("\n  Next:  python -m training.evaluate_civic\n")
+
+
+if __name__ == "__main__":
+    main()

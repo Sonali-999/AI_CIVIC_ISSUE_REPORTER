@@ -1,0 +1,38 @@
+# Virtual env
+venv/
+.venv/
+# Environment variables
+.env
+
+# Uploaded images
+app/uploads/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+#keys
+keys/
+
+# Training data — hundreds of MB, re-downloadable with training/download_civic.py
+
+
+# Trained model weights (large binaries)
+models/*.pt
+# Decoded-pixel cache built by training/data.py — derived, rebuildable
+
+paper/
+paper/current
+
+venv/
+.env
+__pycache__/
+*.pyc
+node_modules/
+logs/
+uploads/
+reports/

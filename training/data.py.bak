@@ -1,0 +1,123 @@
+"""
+data.py
+-------
+Dataset and DataLoader construction for the civic-issue classifier.
+
+Images are read from the manifest written by prepare_civic.py, so no copy of
+the dataset is duplicated on disk.
+"""
+
+import json
+from pathlib import Path
+
+import torch
+from PIL import Image, ImageFile
+from torch.utils.data import DataLoader, Dataset
+from torchvision import transforms
+
+from .config import (
+    BATCH_SIZE, IMAGE_SIZE, NORM_MEAN, NORM_STD, SPLIT_DIR,
+)
+
+# Some municipal photos in the wild are slightly truncated; without this a
+# single corrupt file aborts an entire epoch.
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+MANIFEST = SPLIT_DIR / "manifest.json"
+
+
+def _train_transform() -> transforms.Compose:
+    """
+    Augmentation for training.
+
+    Chosen for photographs taken by citizens on phones: they arrive at any
+    orientation, distance, and time of day, so scale/flip/colour jitter all
+    reflect real variation. Vertical flipping is excluded - civic photos have a
+    reliable up direction, and inverting them teaches nothing useful.
+    """
+    return transforms.Compose([
+        transforms.RandomResizedCrop(IMAGE_SIZE, scale=(0.7, 1.0)),
+        transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.2),
+        transforms.RandomRotation(12),
+        transforms.ToTensor(),
+        transforms.Normalize(NORM_MEAN, NORM_STD),
+    ])
+
+
+def _eval_transform() -> transforms.Compose:
+    """Deterministic preprocessing for validation and test."""
+    return transforms.Compose([
+        transforms.Resize(int(IMAGE_SIZE * 1.14)),
+        transforms.CenterCrop(IMAGE_SIZE),
+        transforms.ToTensor(),
+        transforms.Normalize(NORM_MEAN, NORM_STD),
+    ])
+
+
+class ManifestDataset(Dataset):
+    """Reads (path, label) pairs listed in manifest.json for one split."""
+
+    def __init__(self, split: str, transform):
+        if not MANIFEST.exists():
+            raise FileNotFoundError(
+                f"{MANIFEST} not found. Run: python -m training.prepare_civic"
+            )
+        blob = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        self.classes: list[str] = blob["classes"]
+        self.items: list[tuple[str, int]] = [tuple(i) for i in blob[split]]
+        self.transform = transform
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+    def __getitem__(self, idx: int):
+        path, label = self.items[idx]
+        with Image.open(path) as img:
+            image = img.convert("RGB")
+        return self.transform(image), label
+
+
+def class_names() -> list[str]:
+    """The ordered class list the model's output neurons correspond to."""
+    return json.loads(MANIFEST.read_text(encoding="utf-8"))["classes"]
+
+
+def class_weights() -> torch.Tensor:
+    """
+    Inverse-frequency weights for the loss function.
+
+    Municipal datasets are rarely balanced - garbage photos typically far
+    outnumber dead-animal ones. Without weighting, the model can score well by
+    ignoring the rare categories entirely, which is precisely the failure a
+    complaint-routing system cannot afford.
+    """
+    blob = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    n_classes = len(blob["classes"])
+    counts = torch.zeros(n_classes)
+    for _, label in blob["train"]:
+        counts[label] += 1
+    counts = counts.clamp(min=1)
+    weights = counts.sum() / (n_classes * counts)
+    return weights
+
+
+def make_loaders(batch_size: int = BATCH_SIZE, num_workers: int = 4):
+    """Build the train / val / test loaders."""
+    train_ds = ManifestDataset("train", _train_transform())
+    val_ds   = ManifestDataset("val",   _eval_transform())
+    test_ds  = ManifestDataset("test",  _eval_transform())
+
+    pin = torch.cuda.is_available()
+
+    def loader(ds, shuffle):
+        return DataLoader(
+            ds,
+            batch_size=batch_size,
+            shuffle=shuffle,
+            num_workers=num_workers,
+            pin_memory=pin,
+            persistent_workers=num_workers > 0,
+        )
+
+    return loader(train_ds, True), loader(val_ds, False), loader(test_ds, False)

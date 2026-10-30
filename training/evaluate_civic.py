@@ -1,0 +1,342 @@
+"""
+evaluate_civic.py
+-----------------
+Score the trained classifier on the held-out test split and emit the figures
+and tables the paper's Section IV leaves as placeholders.
+
+    python -m training.evaluate_civic
+
+Writes to figures/:
+    class_distribution.png    - test-set composition (Section IV-B)
+    per_class_metrics.png     - accuracy/precision/recall/F1 per category
+    confusion_matrix.png      - confusion matrix (Fig. IV-C)
+    roc_curves.png            - one-vs-rest ROC with AUC (Fig. IV-C)
+    confidence_distribution.png - softmax confidence, correct vs incorrect
+    training_curves.png       - loss/accuracy per epoch
+
+Writes to reports/:
+    metrics.json              - every number, machine-readable
+    results_tables.tex        - LaTeX for Table II and the per-class table
+"""
+
+import json
+
+import matplotlib
+matplotlib.use("Agg")            # no display available; render straight to file
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+import torch.nn.functional as F
+from sklearn.metrics import (
+    accuracy_score, auc, classification_report, confusion_matrix, roc_curve,
+)
+
+from .config import (
+    CHECKPOINT, FIGURES_DIR, REPORTS_DIR, USE_TTA, department_for, ensure_dirs,
+)
+from .data import make_loaders
+from .model import describe_device, pick_device
+from .predict import EnsemblePredictor
+
+# Colour-blind-safe qualitative palette, consistent across every figure.
+PALETTE = ["#2A6F97", "#E07A5F", "#3D9970", "#B07AA1", "#E6B800",
+           "#7A5195", "#00857C", "#BC5090", "#5C7A29", "#8C6D31"]
+
+
+def collect_predictions(predictor, loader):
+    """
+    Run the test set and return (true labels, predicted labels, probabilities).
+
+    Routed through EnsemblePredictor rather than calling the model directly, so
+    the accuracy reported here is produced by exactly the code path that serves
+    a citizen's complaint - same members, same test-time augmentation. An
+    evaluation that skips either would overstate what the deployed system does.
+    """
+    all_true, all_pred, all_prob = [], [], []
+
+    for images, labels in loader:
+        probs = predictor.probs(images)
+        all_true.append(labels)
+        all_pred.append(probs.argmax(1))
+        all_prob.append(probs)
+
+    return (
+        torch.cat(all_true).numpy(),
+        torch.cat(all_pred).numpy(),
+        torch.cat(all_prob).numpy(),
+    )
+
+
+def _style(ax, title, xlabel="", ylabel=""):
+    ax.set_title(title, fontsize=12, fontweight="bold", pad=12)
+    if xlabel:
+        ax.set_xlabel(xlabel, fontsize=10)
+    if ylabel:
+        ax.set_ylabel(ylabel, fontsize=10)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="y", alpha=0.25, linestyle="--")
+    ax.set_axisbelow(True)
+
+
+def plot_class_distribution(y_true, classes):
+    counts = np.bincount(y_true, minlength=len(classes))
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.bar(classes, counts, color=PALETTE[: len(classes)], edgecolor="white")
+    for i, c in enumerate(counts):
+        ax.text(i, c, f" {c}", ha="center", va="bottom", fontsize=9, fontweight="bold")
+    _style(ax, "Test-Set Class Distribution", ylabel="Images")
+    plt.xticks(rotation=20, ha="right")
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "class_distribution.png", dpi=200)
+    plt.close(fig)
+
+
+def plot_per_class_metrics(report, classes):
+    metrics = ["precision", "recall", "f1-score"]
+    x = np.arange(len(classes))
+    width = 0.26
+
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    for i, metric in enumerate(metrics):
+        values = [report[c][metric] for c in classes]
+        ax.bar(x + (i - 1) * width, values, width,
+               label=metric.replace("-score", ""), color=PALETTE[i], edgecolor="white")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(classes, rotation=20, ha="right")
+    ax.set_ylim(0, 1.05)
+    _style(ax, "Per-Category Precision / Recall / F1", ylabel="Score")
+    ax.legend(frameon=False, ncol=3, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "per_class_metrics.png", dpi=200)
+    plt.close(fig)
+
+
+def plot_confusion_matrix(y_true, y_pred, classes):
+    cm = confusion_matrix(y_true, y_pred)
+    # Row-normalise so classes with few test images stay readable.
+    cm_norm = cm.astype(float) / cm.sum(axis=1, keepdims=True).clip(min=1)
+
+    fig, ax = plt.subplots(figsize=(7, 6))
+    im = ax.imshow(cm_norm, cmap="Blues", vmin=0, vmax=1)
+
+    ax.set_xticks(range(len(classes)), classes, rotation=35, ha="right")
+    ax.set_yticks(range(len(classes)), classes)
+    ax.set_xlabel("Predicted", fontsize=10)
+    ax.set_ylabel("Actual", fontsize=10)
+    ax.set_title("Confusion Matrix (row-normalised)",
+                 fontsize=12, fontweight="bold", pad=12)
+
+    for i in range(len(classes)):
+        for j in range(len(classes)):
+            ax.text(j, i, f"{cm[i, j]}\n{cm_norm[i, j]:.0%}",
+                    ha="center", va="center", fontsize=8,
+                    color="white" if cm_norm[i, j] > 0.5 else "#1A2B42")
+
+    fig.colorbar(im, ax=ax, fraction=0.046, label="Proportion of actual class")
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "confusion_matrix.png", dpi=200)
+    plt.close(fig)
+
+
+def plot_roc_curves(y_true, y_prob, classes) -> dict[str, float]:
+    """One-vs-rest ROC per category. Returns the AUC of each."""
+    fig, ax = plt.subplots(figsize=(6.5, 5.5))
+    aucs = {}
+
+    for i, name in enumerate(classes):
+        binary_true = (y_true == i).astype(int)
+        if binary_true.sum() == 0:            # class absent from the test split
+            continue
+        fpr, tpr, _ = roc_curve(binary_true, y_prob[:, i])
+        area = auc(fpr, tpr)
+        aucs[name] = float(area)
+        ax.plot(fpr, tpr, color=PALETTE[i % len(PALETTE)],
+                linewidth=2, label=f"{name} (AUC {area:.3f})")
+
+    ax.plot([0, 1], [0, 1], "--", color="#9AA5B1", linewidth=1, label="chance")
+    ax.set_xlim(0, 1); ax.set_ylim(0, 1.02)
+    _style(ax, "One-vs-Rest ROC Curves",
+           xlabel="False positive rate", ylabel="True positive rate")
+    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "roc_curves.png", dpi=200)
+    plt.close(fig)
+    return aucs
+
+
+def plot_confidence_distribution(y_true, y_pred, y_prob):
+    confidence = y_prob.max(axis=1)
+    correct = y_true == y_pred
+
+    fig, ax = plt.subplots(figsize=(7.5, 4.5))
+    bins = np.linspace(0, 1, 26)
+    ax.hist(confidence[correct], bins=bins, alpha=0.8,
+            color=PALETTE[2], label=f"correct (n={correct.sum()})", edgecolor="white")
+    ax.hist(confidence[~correct], bins=bins, alpha=0.8,
+            color=PALETTE[1], label=f"incorrect (n={(~correct).sum()})", edgecolor="white")
+    _style(ax, "Prediction Confidence Distribution",
+           xlabel="Softmax confidence", ylabel="Predictions")
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "confidence_distribution.png", dpi=200)
+    plt.close(fig)
+
+
+def plot_training_curves():
+    """
+    Training loss and validation accuracy, one line per ensemble member.
+
+    Plotting the members together is the point: it shows whether they converged
+    to similar accuracy by different routes, which is the condition under which
+    averaging them actually helps.
+    """
+    history_path = REPORTS_DIR / "training_history.json"
+    if not history_path.exists():
+        return
+    history = json.loads(history_path.read_text(encoding="utf-8"))
+    if not history:
+        return
+
+    # Group by backbone; older single-model histories have no "arch" key.
+    runs: dict[str, list[dict]] = {}
+    for row in history:
+        runs.setdefault(row.get("arch", "model"), []).append(row)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.5, 4.3))
+
+    for i, (name, rows) in enumerate(runs.items()):
+        colour = PALETTE[i % len(PALETTE)]
+        epochs = [r["epoch"] for r in rows]
+        ax1.plot(epochs, [r["train_loss"] for r in rows],
+                 color=colour, linewidth=2, label=name)
+        ax2.plot(epochs, [r["val_acc"] for r in rows],
+                 color=colour, linewidth=2, label=name)
+        # Mark the checkpoint each member was actually saved at.
+        best = max(range(len(rows)), key=lambda k: rows[k]["val_acc"])
+        ax2.scatter([rows[best]["epoch"]], [rows[best]["val_acc"]],
+                    color=colour, s=42, zorder=5, edgecolor="white", linewidth=1.4)
+
+    _style(ax1, "Training Loss", xlabel="Epoch", ylabel="Soft-target cross-entropy")
+    ax1.legend(frameon=False, fontsize=9)
+
+    _style(ax2, "Validation Accuracy", xlabel="Epoch", ylabel="Accuracy")
+    ax2.set_ylim(0, 1.02)
+    ax2.legend(frameon=False, fontsize=9, loc="lower right")
+
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / "training_curves.png", dpi=200)
+    plt.close(fig)
+
+
+def write_latex(accuracy, report, classes, aucs):
+    """Emit LaTeX for the paper's Table II row and the per-class results table."""
+    rows = "\n".join(
+        f"{c.replace('_', ' ').title()} & {department_for(c)} & "
+        f"{report[c]['precision']:.3f} & {report[c]['recall']:.3f} & "
+        f"{report[c]['f1-score']:.3f} & {aucs.get(c, float('nan')):.3f} & "
+        f"{int(report[c]['support'])} \\\\"
+        for c in classes
+    )
+
+    tex = f"""% ── Generated by training/evaluate_civic.py ──────────────────────
+% Replaces the "pending" CivicAI row in Table II.
+\\textbf{{CivicAI (proposed)}} & Accuracy & \\textbf{{{accuracy:.2%}}} & this work \\\\
+
+% Per-category results table.
+\\begin{{table}}[t]
+\\caption{{CivicAI Per-Category Classification Results}}
+\\label{{tab:percategory}}
+\\centering
+\\begin{{tabular}}{{llrrrrr}}
+\\hline
+\\textbf{{Category}} & \\textbf{{Department}} & \\textbf{{Prec.}} & \\textbf{{Rec.}} &
+\\textbf{{F1}} & \\textbf{{AUC}} & \\textbf{{N}} \\\\
+\\hline
+{rows}
+\\hline
+\\textbf{{Macro avg}} & --- & {report['macro avg']['precision']:.3f} &
+{report['macro avg']['recall']:.3f} & {report['macro avg']['f1-score']:.3f} &
+{np.mean(list(aucs.values())) if aucs else float('nan'):.3f} &
+{int(report['macro avg']['support'])} \\\\
+\\hline
+\\end{{tabular}}
+\\end{{table}}
+"""
+    (REPORTS_DIR / "results_tables.tex").write_text(tex, encoding="utf-8")
+
+
+def main() -> None:
+    ensure_dirs()
+
+    if not CHECKPOINT.exists():
+        raise SystemExit(
+            f"\n  No checkpoint at {CHECKPOINT}.\n"
+            "  Run first:  python -m training.train_civic\n"
+        )
+
+    device = pick_device()
+    predictor = EnsemblePredictor.load(device, use_tta=USE_TTA)
+    classes = predictor.classes
+
+    _, _, test_loader = make_loaders()
+    print(f"\n  Evaluating on {len(test_loader.dataset):,} held-out images "
+          f"({describe_device(device)})")
+    print(f"  Model: {predictor.describe()}\n")
+
+    y_true, y_pred, y_prob = collect_predictions(predictor, test_loader)
+
+    accuracy = accuracy_score(y_true, y_pred)
+    report = classification_report(
+        y_true, y_pred, labels=list(range(len(classes))),
+        target_names=classes, output_dict=True, zero_division=0,
+    )
+
+    plot_class_distribution(y_true, classes)
+    plot_per_class_metrics(report, classes)
+    plot_confusion_matrix(y_true, y_pred, classes)
+    aucs = plot_roc_curves(y_true, y_prob, classes)
+    plot_confidence_distribution(y_true, y_pred, y_prob)
+    plot_training_curves()
+    write_latex(accuracy, report, classes, aucs)
+
+    confidence = y_prob.max(axis=1)
+    correct = y_true == y_pred
+    metrics = {
+        "test_accuracy": float(accuracy),
+        "macro_f1": float(report["macro avg"]["f1-score"]),
+        "weighted_f1": float(report["weighted avg"]["f1-score"]),
+        "mean_auc": float(np.mean(list(aucs.values()))) if aucs else None,
+        "per_class": {c: report[c] for c in classes},
+        "per_class_auc": aucs,
+        "mean_confidence_correct": float(confidence[correct].mean()) if correct.any() else None,
+        "mean_confidence_incorrect": float(confidence[~correct].mean()) if (~correct).any() else None,
+        "test_images": int(len(y_true)),
+        "departments": {c: department_for(c) for c in classes},
+        "model": predictor.describe(),
+        "ensemble_members": predictor.arch_names,
+        "test_time_augmentation": predictor.use_tta,
+    }
+    (REPORTS_DIR / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+
+    print("  Results")
+    print("  " + "=" * 70)
+    print(f"    {'CATEGORY':<20}{'PREC':>8}{'RECALL':>8}{'F1':>8}{'AUC':>8}{'N':>8}")
+    print("  " + "-" * 70)
+    for c in classes:
+        r = report[c]
+        print(f"    {c:<20}{r['precision']:>8.3f}{r['recall']:>8.3f}"
+              f"{r['f1-score']:>8.3f}{aucs.get(c, float('nan')):>8.3f}"
+              f"{int(r['support']):>8}")
+    print("  " + "-" * 70)
+    print(f"    {'OVERALL ACCURACY':<20}{accuracy:>8.3f}")
+    print(f"    {'MACRO F1':<20}{report['macro avg']['f1-score']:>8.3f}")
+    print(f"    {'MEAN AUC':<20}{np.mean(list(aucs.values())) if aucs else float('nan'):>8.3f}")
+    print("  " + "=" * 70)
+    print(f"\n  Figures -> {FIGURES_DIR}")
+    print(f"  Metrics -> {REPORTS_DIR / 'metrics.json'}")
+    print(f"  LaTeX   -> {REPORTS_DIR / 'results_tables.tex'}\n")
+
+
+if __name__ == "__main__":
+    main()
